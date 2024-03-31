@@ -15,6 +15,6 @@ public class ConfigManager extends PluginConfigManager {
 
     public final class BotConfig {
         public final String token = getString(ConfigKeys.Bot.TOKEN);
-        public final String guildId = getString(ConfigKeys.Bot.GUILD_ID);
+        public final long guildId = config.getLong(ConfigKeys.Bot.GUILD_ID);
     }
 }
