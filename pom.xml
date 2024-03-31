@@ -36,12 +36,11 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- MineCordCore -->
+    <!-- Discord API -->
     <dependency>
-      <groupId>com.lith.minecordcore</groupId>
-      <artifactId>minecordcore</artifactId>
-      <version>0.0.1</version>
-      <scope>provided</scope>
+      <groupId>com.discord4j</groupId>
+      <artifactId>discord4j-core</artifactId>
+      <version>3.2.1</version>
     </dependency>
   </dependencies>
   <build>

@@ -8,5 +8,5 @@ description: A MineCraft x Discord integration plugin
 author: Lith
 website: https://github.com/ImLith/MC-MineCord
 
-depend: [LithCore, MineCordCore]
+depend: [LithCore]
 softdepend: []

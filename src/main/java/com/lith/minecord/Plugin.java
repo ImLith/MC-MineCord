@@ -9,10 +9,16 @@ public class Plugin extends MainPlugin<ConfigManager> {
   public void onEnable() {
     Plugin.plugin = this;
 
+    registerConfig();
+
     Static.log.info("Plugin enabled");
   }
 
   public void onDisable() {
     Static.log.info("Plugin disabled");
+  }
+
+  public void registerConfig() {
+    new ConfigManager(this);
   }
 }
