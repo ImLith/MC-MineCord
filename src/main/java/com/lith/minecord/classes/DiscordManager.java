@@ -15,7 +15,7 @@ public class DiscordManager {
     private DiscordManager() {
     }
 
-    public DiscordManager init() {
+    public static DiscordManager init() {
         if (init == null)
             init = new DiscordManager();
 
