@@ -1,5 +1,6 @@
 package com.lith.minecord.discord;
 
+import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -35,6 +36,7 @@ public class DiscordManager {
         }
     }
 
+    @SuppressWarnings("null")
     private void createBuilder() {
         builder = JDABuilder.createDefault(ConfigManager.botConfig.token);
 
@@ -42,6 +44,7 @@ public class DiscordManager {
         builder.disableCache(CacheFlag.ACTIVITY);
         builder.setChunkingFilter(ChunkingFilter.NONE);
         builder.setLargeThreshold(50);
+        builder.enableIntents(Static.gatewayIntents);
     }
 
     private void createClient() {

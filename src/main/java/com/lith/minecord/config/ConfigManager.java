@@ -17,10 +17,9 @@ public class ConfigManager extends PluginConfigManager {
 
     public final class BotConfig {
         public final String token = getString(ConfigKeys.Bot.TOKEN);
-        public final long guildId = config.getLong(ConfigKeys.Bot.GUILD_ID);
     }
 
     public final class LivechatConfig {
-        public final long channelId = config.getLong(ConfigKeys.Livechat.CHANNEL_ID);
+        public final String channelId = getString(ConfigKeys.Livechat.CHANNEL_ID);
     }
 }
