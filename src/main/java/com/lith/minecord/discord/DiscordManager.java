@@ -1,9 +1,12 @@
 package com.lith.minecord.discord;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
@@ -34,6 +37,21 @@ public class DiscordManager {
             client.shutdownNow();
             client = null;
         }
+    }
+
+    public void sendMcMessage(@NotNull String playerName, @NotNull String content) {
+        if (client == null)
+            return;
+
+        String channelId = ConfigManager.livechatConfig.channelId;
+        if (channelId == null)
+            return;
+
+        TextChannel channel = client.getTextChannelById(channelId);
+        if (channel == null)
+            return;
+
+        channel.sendMessage("*" + playerName + "*: " + content).queue();
     }
 
     @SuppressWarnings("null")
