@@ -17,9 +17,13 @@ public class ConfigManager extends PluginConfigManager {
 
     public final class BotConfig {
         public final String token = getString(ConfigKeys.Bot.TOKEN);
+        public final String inviteLink = getString(ConfigKeys.Bot.INVITE_LINK);
     }
 
     public final class LivechatConfig {
         public final String channelId = getString(ConfigKeys.Livechat.CHANNEL_ID);
+        public final String formatDiscord = getMessage(ConfigKeys.Livechat.FORMAT_DISCORD);
+        public final String hoverText = getMessage(ConfigKeys.Livechat.HOVER_TEXT);
+        public final Boolean canClick = config.getBoolean(ConfigKeys.Livechat.CAN_CLICK);
     }
 }

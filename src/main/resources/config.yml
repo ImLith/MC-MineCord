@@ -1,6 +1,18 @@
 bot:
   token: "YOUR DISCORD BOT TOKEN"
+  invite_link: "YOUR DISCORD INVITE LINK"
 
 livechat:
   # ID of a discord channel to add integration to
   channel_id: "ID"
+
+  # In what Format the Discord => MineCraft message should render
+  # Supports color codes and unicodes
+  format_discord: "[%user_name%]: %content%"
+
+  # Leave empty to not add hover effect
+  # Supports color codes and unicodes
+  hoverText: "Sent from Discord serve.\nClick to join!"
+
+  # If set to true (default) will take the user to your server specified in the invite link
+  canClick: true
