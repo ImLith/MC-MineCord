@@ -38,28 +38,18 @@ public class DiscordManager {
         }
     }
 
-    public void sendMcMessage(@NotNull String playerName, @NotNull String content) {
+    public void sendMessage(@NotNull String channelId, @NotNull String content) {
         if (client == null)
             return;
 
-        if (playerName.isEmpty() || content.isEmpty())
-            return;
-
-        String channelId = ConfigManager.livechatConfig.channelId;
-        if (channelId == null)
+        if (channelId.isEmpty() || content.isEmpty())
             return;
 
         TextChannel channel = client.getTextChannelById(channelId);
         if (channel == null)
             return;
 
-        String msg = ConfigManager.livechatConfig.formatMinecraft
-                .replace(Static.MessageKey.PLAYER_NAME, playerName)
-                .replace(Static.MessageKey.CONTENT, content);
-        if (msg == null)
-            return;
-
-        channel.sendMessage(msg).queue(
+        channel.sendMessage(content).queue(
                 error -> {
                     Static.log.warning("Failed to send message to Discord: " + error.getContentRaw());
                 });
