@@ -28,3 +28,5 @@ livechat:
   joinMessage: "**%player_name%** *Joined the server*"
   leaveMessage: "**%player_name%** *Left the server*"
   achievement: "**%player_name%** got **%achievement_name%** *%achievement_description%*"
+  serverOnline: "**Server is online**"
+  serverOffline: "**Server is offline**"

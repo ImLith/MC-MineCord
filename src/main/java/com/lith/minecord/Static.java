@@ -27,6 +27,8 @@ public class Static {
             public static final String JOIN_MESSAGE = setKey("joinMessage");
             public static final String LEAVE_MESSAGE = setKey("leaveMessage");
             public static final String ACHIEVEMENT = setKey("achievement");
+            public static final String SERVER_ONLINE = setKey("serverOnline");
+            public static final String SERVER_OFFLINE = setKey("serverOffline");
         }
     }
 

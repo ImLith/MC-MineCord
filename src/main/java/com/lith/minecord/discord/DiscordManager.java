@@ -33,7 +33,7 @@ public class DiscordManager {
 
     public void stop() {
         if (client != null) {
-            client.shutdownNow();
+            client.shutdown();
             client = null;
         }
     }

@@ -20,9 +20,19 @@ public class Plugin extends MainPlugin<ConfigManager> {
     registerEvents();
 
     Static.log.info("Plugin enabled");
+
+    if (!ConfigManager.livechatConfig.serverOnline.isEmpty())
+      DiscordManager.init().sendMessage(
+          ConfigManager.livechatConfig.channelId,
+          ConfigManager.livechatConfig.serverOnline);
   }
 
   public void onDisable() {
+    if (!ConfigManager.livechatConfig.serverOffline.isEmpty())
+      DiscordManager.init().sendMessage(
+          ConfigManager.livechatConfig.channelId,
+          ConfigManager.livechatConfig.serverOffline);
+
     DiscordManager.init().stop();
     Static.log.info("Plugin disabled");
   }

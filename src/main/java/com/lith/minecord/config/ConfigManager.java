@@ -30,5 +30,7 @@ public class ConfigManager extends PluginConfigManager {
         public final String joinMessage = getString(ConfigKeys.Livechat.JOIN_MESSAGE);
         public final String leaveMessage = getString(ConfigKeys.Livechat.LEAVE_MESSAGE);
         public final String achievement = getString(ConfigKeys.Livechat.ACHIEVEMENT);
+        public final String serverOnline = getString(ConfigKeys.Livechat.SERVER_ONLINE);
+        public final String serverOffline = getString(ConfigKeys.Livechat.SERVER_OFFLINE);
     }
 }
