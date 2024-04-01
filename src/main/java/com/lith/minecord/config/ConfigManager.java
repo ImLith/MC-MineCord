@@ -23,6 +23,7 @@ public class ConfigManager extends PluginConfigManager {
     public final class LivechatConfig {
         public final String channelId = getString(ConfigKeys.Livechat.CHANNEL_ID);
         public final String formatDiscord = getMessage(ConfigKeys.Livechat.FORMAT_DISCORD);
+        public final String formatMinecraft = getMessage(ConfigKeys.Livechat.FORMAT_MINECRAFT);
         public final String hoverText = getMessage(ConfigKeys.Livechat.HOVER_TEXT);
         public final Boolean canClick = config.getBoolean(ConfigKeys.Livechat.CAN_CLICK);
     }

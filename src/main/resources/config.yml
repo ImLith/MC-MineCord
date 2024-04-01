@@ -10,6 +10,9 @@ livechat:
   # Supports color codes and unicodes
   format_discord: "[%user_name%]: %content%"
 
+  # In what Format the MineCraft => Discord message should render
+  format_minecraft: "**%player_name%** %content%"
+
   # Leave empty to not add hover effect
   # Supports color codes and unicodes
   hoverText: "Sent from Discord serve.\nClick to join!"

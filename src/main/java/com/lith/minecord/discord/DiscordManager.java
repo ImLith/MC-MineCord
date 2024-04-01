@@ -43,6 +43,9 @@ public class DiscordManager {
         if (client == null)
             return;
 
+        if (playerName.isEmpty() || content.isEmpty())
+            return;
+
         String channelId = ConfigManager.livechatConfig.channelId;
         if (channelId == null)
             return;
@@ -51,7 +54,13 @@ public class DiscordManager {
         if (channel == null)
             return;
 
-        channel.sendMessage("*" + playerName + "*: " + content).queue();
+        String msg = ConfigManager.livechatConfig.formatMinecraft
+                .replace(Static.MessageKey.PLAYER_NAME, playerName)
+                .replace(Static.MessageKey.CONTENT, content);
+        if (msg == null)
+            return;
+
+        channel.sendMessage(msg).queue();
     }
 
     @SuppressWarnings("null")

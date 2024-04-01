@@ -20,6 +20,7 @@ public class Static {
         public static final class Livechat extends AbstractConfigKey {
             public static final String CHANNEL_ID = setKey("channel_id");
             public static final String FORMAT_DISCORD = setKey("format_discord");
+            public static final String FORMAT_MINECRAFT = setKey("format_minecraft");
             public static final String HOVER_TEXT = setKey("hoverText");
             public static final String CAN_CLICK = setKey("canClick");
         }
@@ -29,7 +30,7 @@ public class Static {
             .unmodifiableCollection(Arrays.asList(GatewayIntent.MESSAGE_CONTENT));
 
     final public static class MessageKey {
-        public static final String PLAYER_NAME = "%player%";
+        public static final String PLAYER_NAME = "%player_name%";
         public static final String USER_NAME = "%user_name%";
         public static final String CONTENT = "%content%";
     }

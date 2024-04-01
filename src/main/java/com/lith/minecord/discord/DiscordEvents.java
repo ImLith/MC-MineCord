@@ -54,7 +54,7 @@ public class DiscordEvents extends ListenerAdapter {
                 .replace(Static.MessageKey.USER_NAME, author.getEffectiveName())
                 .replace(Static.MessageKey.CONTENT, message.getContentRaw()));
 
-        if (ConfigManager.livechatConfig.hoverText.length() > 1)
+        if (!ConfigManager.livechatConfig.hoverText.isEmpty())
             text = text.hoverEvent(showText(text(ConfigManager.livechatConfig.hoverText)));
 
         if (ConfigManager.livechatConfig.canClick)
