@@ -1,18 +1,18 @@
 package com.lith.minecord.classes;
 
-import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
-import discord4j.core.DiscordClient;
-import discord4j.core.GatewayDiscordClient;
-import discord4j.core.event.domain.lifecycle.ReadyEvent;
-import reactor.core.publisher.Mono;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class DiscordManager {
     private static DiscordManager init = null;
-    private DiscordClient client = null;
-    private GatewayDiscordClient login = null;
+    private JDABuilder builder = null;
+    private JDA client = null;
 
     private DiscordManager() {
+        createBuilder();
     }
 
     public static DiscordManager init() {
@@ -23,50 +23,33 @@ public class DiscordManager {
     }
 
     public void start() {
-        if (isLoggedIn()) {
-            Static.log.warning(
-                    "The Discord client is already logged in!\nFirst stop it if you want to re=login!");
-            return;
+        if (client == null) {
+            createClient();
         }
-
-        createClient();
-        login();
     }
 
     public void stop() {
-        if (isLoggedIn()) {
-            login.logout().block();
-            login = null;
+        if (client != null) {
+            client.shutdownNow();
+            client = null;
         }
+    }
 
-        Static.log.info("Bot stopped offline");
+    private void createBuilder() {
+        builder = JDABuilder.createDefault(ConfigManager.botConfig.token);
+
+        builder.disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
+        builder.disableCache(CacheFlag.ACTIVITY);
+        builder.setChunkingFilter(ChunkingFilter.NONE);
+        builder.setLargeThreshold(50);
     }
 
     private void createClient() {
-        if (isInit())
-            return;
-
-        client = DiscordClient.create(ConfigManager.botConfig.token);
-    }
-
-    private void login() {
-        if (isLoggedIn())
-            return;
-
-        Mono<Void> login = client.withGateway(
-                (GatewayDiscordClient gateway) -> gateway.on(ReadyEvent.class, event -> DiscordEvents.onReady(event)));
-        login.block();
-    }
-
-    private long getAppId() {
-        return login.getRestClient().getApplicationId().block();
-    };
-
-    private boolean isInit() {
-        return client != null;
-    }
-
-    private boolean isLoggedIn() {
-        return login != null;
+        try {
+            client = builder.build();
+            client.awaitReady();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

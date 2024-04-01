@@ -12,12 +12,12 @@ public class Plugin extends MainPlugin<ConfigManager> {
 
     registerConfig();
 
-    Static.log.info("Plugin enabled");
-
     DiscordManager.init().start();
+    Static.log.info("Plugin enabled");
   }
 
   public void onDisable() {
+    DiscordManager.init().stop();
     Static.log.info("Plugin disabled");
   }
 

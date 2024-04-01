@@ -1,17 +1,18 @@
 package com.lith.minecord.classes;
 
+import javax.annotation.Nonnull;
 import com.lith.minecord.Static;
+import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
+import net.dv8tion.jda.api.hooks.EventListener;
 
-import discord4j.core.event.domain.lifecycle.ReadyEvent;
-import discord4j.core.object.entity.User;
-import reactor.core.publisher.Mono;
+public class DiscordEvents implements EventListener {
 
-public class DiscordEvents {
-    public static Mono<Object> onReady(ReadyEvent event) {
-        return Mono.fromRunnable(() -> {
-            final User self = event.getSelf();
-
-            Static.log.info("Logged in as " + self.getUsername());
-        });
+    @Override
+    public void onEvent(@Nonnull GenericEvent event) {
+        if (event instanceof ReadyEvent) {
+            Static.log.info("API is ready!");
+        }
     }
+
 }
