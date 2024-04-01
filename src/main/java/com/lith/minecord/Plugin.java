@@ -3,7 +3,9 @@ package com.lith.minecord;
 import com.lith.lithcore.abstractClasses.MainPlugin;
 import com.lith.minecord.config.ConfigManager;
 import com.lith.minecord.discord.DiscordManager;
-import com.lith.minecord.events.PlayerEvents;
+import com.lith.minecord.events.player.PlayerChat;
+import com.lith.minecord.events.player.PlayerJoin;
+import com.lith.minecord.events.player.PlayerLeave;
 
 public class Plugin extends MainPlugin<ConfigManager> {
   public static Plugin plugin;
@@ -28,6 +30,12 @@ public class Plugin extends MainPlugin<ConfigManager> {
   }
 
   private void registerEvents() {
-    this.getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+    this.getServer().getPluginManager().registerEvents(new PlayerChat(), this);
+
+    if (!ConfigManager.livechatConfig.joinMessage.isEmpty())
+      this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+
+    if (!ConfigManager.livechatConfig.leaveMessage.isEmpty())
+      this.getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
   }
 }
