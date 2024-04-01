@@ -47,6 +47,7 @@ public class DiscordManager {
     private void createClient() {
         try {
             client = builder.build();
+            client.addEventListener(new DiscordEvents());
             client.awaitReady();
         } catch (InterruptedException e) {
             e.printStackTrace();
