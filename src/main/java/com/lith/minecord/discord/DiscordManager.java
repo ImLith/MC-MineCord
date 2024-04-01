@@ -1,4 +1,4 @@
-package com.lith.minecord.classes;
+package com.lith.minecord.discord;
 
 import com.lith.minecord.config.ConfigManager;
 import net.dv8tion.jda.api.JDA;

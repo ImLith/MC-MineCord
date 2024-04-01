@@ -1,4 +1,4 @@
-package com.lith.minecord.classes;
+package com.lith.minecord.discord;
 
 import javax.annotation.Nonnull;
 import com.lith.minecord.Static;

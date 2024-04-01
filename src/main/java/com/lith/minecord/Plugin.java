@@ -1,8 +1,8 @@
 package com.lith.minecord;
 
 import com.lith.lithcore.abstractClasses.MainPlugin;
-import com.lith.minecord.classes.DiscordManager;
 import com.lith.minecord.config.ConfigManager;
+import com.lith.minecord.discord.DiscordManager;
 
 public class Plugin extends MainPlugin<ConfigManager> {
   public static Plugin plugin;
