@@ -51,7 +51,7 @@ public class DiscordEvents extends ListenerAdapter {
             return;
 
         TextComponent text = text(ConfigManager.livechatConfig.formatDiscord
-                .replace(Static.MessageKey.USER_NAME, author.getName())
+                .replace(Static.MessageKey.USER_NAME, author.getEffectiveName())
                 .replace(Static.MessageKey.CONTENT, message.getContentRaw()));
 
         if (ConfigManager.livechatConfig.hoverText.length() > 1)
