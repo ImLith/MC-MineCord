@@ -3,7 +3,6 @@ package com.lith.minecord.discord;
 import javax.annotation.Nonnull;
 import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
-
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageType;
 import net.dv8tion.jda.api.entities.User;
@@ -17,7 +16,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class DiscordEvents extends ListenerAdapter {
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
-        Static.log.info("Discord Bot is Ready!");
+        String botName = event.getJDA().getSelfUser().getName();
+        Static.log.info("Bot " + botName + " is Ready!");
     }
 
     @Override
