@@ -5,6 +5,7 @@ import com.lith.minecord.config.ConfigManager;
 import com.lith.minecord.discord.DiscordManager;
 import com.lith.minecord.events.player.PlayerAchievement;
 import com.lith.minecord.events.player.PlayerChat;
+import com.lith.minecord.events.player.PlayerDeath;
 import com.lith.minecord.events.player.PlayerJoin;
 import com.lith.minecord.events.player.PlayerLeave;
 
@@ -41,5 +42,8 @@ public class Plugin extends MainPlugin<ConfigManager> {
 
     if (!ConfigManager.livechatConfig.achievement.isEmpty())
       this.getServer().getPluginManager().registerEvents(new PlayerAchievement(), this);
+
+    if (ConfigManager.livechatConfig.onDeath)
+      this.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
   }
 }

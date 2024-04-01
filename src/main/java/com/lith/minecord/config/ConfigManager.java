@@ -26,6 +26,7 @@ public class ConfigManager extends PluginConfigManager {
         public final String formatMinecraft = getMessage(ConfigKeys.Livechat.FORMAT_MINECRAFT);
         public final String hoverText = getMessage(ConfigKeys.Livechat.HOVER_TEXT);
         public final Boolean canClick = config.getBoolean(ConfigKeys.Livechat.CAN_CLICK);
+        public final Boolean onDeath = config.getBoolean(ConfigKeys.Livechat.ON_DEATH);
         public final String joinMessage = getString(ConfigKeys.Livechat.JOIN_MESSAGE);
         public final String leaveMessage = getString(ConfigKeys.Livechat.LEAVE_MESSAGE);
         public final String achievement = getString(ConfigKeys.Livechat.ACHIEVEMENT);

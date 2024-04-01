@@ -23,6 +23,7 @@ public class Static {
             public static final String FORMAT_MINECRAFT = setKey("format_minecraft");
             public static final String HOVER_TEXT = setKey("hoverText");
             public static final String CAN_CLICK = setKey("canClick");
+            public static final String ON_DEATH = setKey("onDeath");
             public static final String JOIN_MESSAGE = setKey("joinMessage");
             public static final String LEAVE_MESSAGE = setKey("leaveMessage");
             public static final String ACHIEVEMENT = setKey("achievement");

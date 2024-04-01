@@ -20,6 +20,9 @@ livechat:
   # If set to true (default) will take the user to your server specified in the invite link
   canClick: true
 
+  # If set to true (default) will send death messages to Discord
+  onDeath: true
+
   # In what Format the MineCraft => Discord message should render
   # Leave empty to not send such event messages to Discord
   joinMessage: "**%player_name%** *Joined the server*"

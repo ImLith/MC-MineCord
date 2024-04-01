@@ -39,6 +39,5 @@ public class PlayerAchievement implements Listener {
                         .replace(Static.MessageKey.PLAYER_NAME, event.getPlayer().getName())
                         .replace(Static.MessageKey.ACHIEVEMENT_NAME, advancementTitle)
                         .replace(Static.MessageKey.ACHIEVEMENT_DESCRIPTION, advancementDescription));
-
     }
 }
