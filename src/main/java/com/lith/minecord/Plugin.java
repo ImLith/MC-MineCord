@@ -2,6 +2,12 @@ package com.lith.minecord;
 
 import com.lith.lithcore.abstractClasses.MainPlugin;
 import com.lith.minecord.config.ConfigManager;
+import com.lith.minecord.discord.DiscordManager;
+import com.lith.minecord.events.player.PlayerAchievement;
+import com.lith.minecord.events.player.PlayerChat;
+import com.lith.minecord.events.player.PlayerDeath;
+import com.lith.minecord.events.player.PlayerJoin;
+import com.lith.minecord.events.player.PlayerLeave;
 
 public class Plugin extends MainPlugin<ConfigManager> {
   public static Plugin plugin;
@@ -9,10 +15,45 @@ public class Plugin extends MainPlugin<ConfigManager> {
   public void onEnable() {
     Plugin.plugin = this;
 
+    registerConfig();
+    DiscordManager.init().start();
+    registerEvents();
+
     Static.log.info("Plugin enabled");
+
+    if (!ConfigManager.livechatConfig.serverOnline.isEmpty())
+      DiscordManager.init().sendMessage(
+          ConfigManager.livechatConfig.channelId,
+          ConfigManager.livechatConfig.serverOnline);
   }
 
   public void onDisable() {
+    if (!ConfigManager.livechatConfig.serverOffline.isEmpty())
+      DiscordManager.init().sendMessage(
+          ConfigManager.livechatConfig.channelId,
+          ConfigManager.livechatConfig.serverOffline);
+
+    DiscordManager.init().stop();
     Static.log.info("Plugin disabled");
+  }
+
+  public void registerConfig() {
+    new ConfigManager(this);
+  }
+
+  private void registerEvents() {
+    this.getServer().getPluginManager().registerEvents(new PlayerChat(), this);
+
+    if (!ConfigManager.livechatConfig.joinMessage.isEmpty())
+      this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+
+    if (!ConfigManager.livechatConfig.leaveMessage.isEmpty())
+      this.getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
+
+    if (!ConfigManager.livechatConfig.achievement.isEmpty())
+      this.getServer().getPluginManager().registerEvents(new PlayerAchievement(), this);
+
+    if (ConfigManager.livechatConfig.onDeath)
+      this.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
   }
 }

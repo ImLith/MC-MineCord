@@ -1,0 +1,32 @@
+bot:
+  token: "YOUR DISCORD BOT TOKEN"
+  invite_link: "YOUR DISCORD INVITE LINK"
+
+livechat:
+  # ID of a discord channel to add integration to
+  channel_id: "ID"
+
+  # In what Format the Discord => MineCraft message should render
+  # Supports color codes and unicodes
+  format_discord: "[%user_name%]: %content%"
+
+  # In what Format the MineCraft => Discord message should render
+  format_minecraft: "**%player_name%** %content%"
+
+  # Leave empty to not add hover effect
+  # Supports color codes and unicodes
+  hoverText: "Sent from Discord serve.\nClick to join!"
+
+  # If set to true (default) will take the user to your server specified in the invite link
+  canClick: true
+
+  # If set to true (default) will send death messages to Discord
+  onDeath: true
+
+  # In what Format the MineCraft => Discord message should render
+  # Leave empty to not send such event messages to Discord
+  joinMessage: "**%player_name%** *Joined the server*"
+  leaveMessage: "**%player_name%** *Left the server*"
+  achievement: "**%player_name%** got **%achievement_name%** *%achievement_description%*"
+  serverOnline: "**Server is online**"
+  serverOffline: "**Server is offline**"
