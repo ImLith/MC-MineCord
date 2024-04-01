@@ -28,5 +28,6 @@ public class ConfigManager extends PluginConfigManager {
         public final Boolean canClick = config.getBoolean(ConfigKeys.Livechat.CAN_CLICK);
         public final String joinMessage = getString(ConfigKeys.Livechat.JOIN_MESSAGE);
         public final String leaveMessage = getString(ConfigKeys.Livechat.LEAVE_MESSAGE);
+        public final String achievement = getString(ConfigKeys.Livechat.ACHIEVEMENT);
     }
 }

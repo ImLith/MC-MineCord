@@ -24,3 +24,4 @@ livechat:
   # Leave empty to not send such event messages to Discord
   joinMessage: "**%player_name%** *Joined the server*"
   leaveMessage: "**%player_name%** *Left the server*"
+  achievement: "**%player_name%** got **%achievement_name%** *%achievement_description%*"

@@ -3,6 +3,7 @@ package com.lith.minecord;
 import com.lith.lithcore.abstractClasses.MainPlugin;
 import com.lith.minecord.config.ConfigManager;
 import com.lith.minecord.discord.DiscordManager;
+import com.lith.minecord.events.player.PlayerAchievement;
 import com.lith.minecord.events.player.PlayerChat;
 import com.lith.minecord.events.player.PlayerJoin;
 import com.lith.minecord.events.player.PlayerLeave;
@@ -37,5 +38,8 @@ public class Plugin extends MainPlugin<ConfigManager> {
 
     if (!ConfigManager.livechatConfig.leaveMessage.isEmpty())
       this.getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
+
+    if (!ConfigManager.livechatConfig.achievement.isEmpty())
+      this.getServer().getPluginManager().registerEvents(new PlayerAchievement(), this);
   }
 }

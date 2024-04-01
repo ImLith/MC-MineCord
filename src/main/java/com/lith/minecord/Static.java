@@ -25,6 +25,7 @@ public class Static {
             public static final String CAN_CLICK = setKey("canClick");
             public static final String JOIN_MESSAGE = setKey("joinMessage");
             public static final String LEAVE_MESSAGE = setKey("leaveMessage");
+            public static final String ACHIEVEMENT = setKey("achievement");
         }
     }
 
@@ -35,5 +36,7 @@ public class Static {
         public static final String PLAYER_NAME = "%player_name%";
         public static final String USER_NAME = "%user_name%";
         public static final String CONTENT = "%content%";
+        public static final String ACHIEVEMENT_NAME = "%achievement_name%";
+        public static final String ACHIEVEMENT_DESCRIPTION = "%achievement_description%";
     }
 }
