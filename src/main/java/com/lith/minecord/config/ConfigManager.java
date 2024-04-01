@@ -6,15 +6,21 @@ import com.lith.minecord.Static.ConfigKeys;
 
 public class ConfigManager extends PluginConfigManager {
     public static BotConfig botConfig;
+    public static LivechatConfig livechatConfig;
 
     public ConfigManager(final MainPlugin<ConfigManager> plugin) {
         super(plugin);
 
         botConfig = new BotConfig();
+        livechatConfig = new LivechatConfig();
     }
 
     public final class BotConfig {
         public final String token = getString(ConfigKeys.Bot.TOKEN);
         public final long guildId = config.getLong(ConfigKeys.Bot.GUILD_ID);
+    }
+
+    public final class LivechatConfig {
+        public final long channelId = config.getLong(ConfigKeys.Livechat.CHANNEL_ID);
     }
 }

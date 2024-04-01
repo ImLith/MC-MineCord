@@ -1,7 +1,6 @@
 package com.lith.minecord;
 
 import java.util.logging.Logger;
-
 import com.lith.lithcore.abstractClasses.AbstractConfigKey;
 
 public class Static {
@@ -12,6 +11,10 @@ public class Static {
         public static final class Bot extends AbstractConfigKey {
             public static final String TOKEN = setKey("token");
             public static final String GUILD_ID = setKey("guild_id");
+        }
+
+        public static final class Livechat extends AbstractConfigKey {
+            public static final String CHANNEL_ID = setKey("channel_id");
         }
     }
 }

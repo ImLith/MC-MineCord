@@ -1,3 +1,8 @@
 bot:
   token: "YOUR DISCORD BOT TOKEN"
-  guild_id: YOUR DISCORD SERVER ID
+  # ID of your server
+  guild_id: ID
+
+livechat:
+  # ID of a discord channel to add integration to
+  channel_id: ID
