@@ -1,7 +1,6 @@
 package com.lith.minecord.discord;
 
 import org.jetbrains.annotations.NotNull;
-
 import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
 import net.dv8tion.jda.api.JDA;
@@ -60,7 +59,10 @@ public class DiscordManager {
         if (msg == null)
             return;
 
-        channel.sendMessage(msg).queue();
+        channel.sendMessage(msg).queue(
+                error -> {
+                    Static.log.warning("Failed to send message to Discord: " + error.getContentRaw());
+                });
     }
 
     @SuppressWarnings("null")
