@@ -22,7 +22,7 @@ public class DiscordEvents extends ListenerAdapter {
 
     @Override
     public void onShutdown(@Nonnull ShutdownEvent event) {
-        Static.log.info("Discord Bot shuw down!");
+        Static.log.info("Discord Bot shutdown!");
     }
 
     @Override
