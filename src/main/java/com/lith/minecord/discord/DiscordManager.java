@@ -50,8 +50,10 @@ public class DiscordManager {
             return;
 
         channel.sendMessage(content).queue(
+                success -> {
+                },
                 error -> {
-                    Static.log.warning("Failed to send message to Discord: " + error.getContentRaw());
+                    Static.log.warning("Failed to send message to Discord: " + error);
                 });
     }
 
