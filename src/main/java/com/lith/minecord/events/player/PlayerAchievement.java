@@ -24,9 +24,12 @@ public class PlayerAchievement implements Listener {
             return;
 
         Component titleComponent = display.title();
-        String advancementTitle = titleComponent != null
-                ? PlainTextComponentSerializer.plainText().serialize(titleComponent)
-                : "";
+        if (titleComponent == null)
+            return;
+
+        String advancementTitle = PlainTextComponentSerializer.plainText().serialize(titleComponent);
+        if (advancementTitle == null)
+            return;
 
         Component descriptionComponent = display.description();
         String advancementDescription = descriptionComponent != null
