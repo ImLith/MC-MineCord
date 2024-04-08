@@ -57,7 +57,6 @@ public class DiscordManager {
                 });
     }
 
-    @SuppressWarnings("null")
     private void createBuilder() {
         builder = JDABuilder.createDefault(ConfigManager.botConfig.token);
 
