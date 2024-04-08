@@ -50,12 +50,13 @@ public class DiscordManager {
             return;
 
         channel.sendMessage(content).queue(
+                success -> {
+                },
                 error -> {
-                    Static.log.warning("Failed to send message to Discord: " + error.getContentRaw());
+                    Static.log.warning("Failed to send message to Discord: " + error);
                 });
     }
 
-    @SuppressWarnings("null")
     private void createBuilder() {
         builder = JDABuilder.createDefault(ConfigManager.botConfig.token);
 
