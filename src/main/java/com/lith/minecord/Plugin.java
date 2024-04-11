@@ -1,6 +1,5 @@
 package com.lith.minecord;
 
-import org.bukkit.event.player.PlayerInteractEvent;
 import com.lith.lithcore.abstractClasses.MainPlugin;
 import com.lith.lithcore.classes.commands.ReloadConfigCmd;
 import com.lith.minecord.classes.DiscordManager;
@@ -13,10 +12,12 @@ import com.lith.minecord.events.player.PlayerLeave;
 import com.lith.minecord.utils.DcMessageUtil;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import java.util.ArrayList;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 public class Plugin extends MainPlugin<ConfigManager> {
   private ArrayList<Listener> registeredEvents = new ArrayList<>();
+
   public static Plugin plugin;
 
   public void onEnable() {
@@ -91,7 +92,7 @@ public class Plugin extends MainPlugin<ConfigManager> {
 
   private void unregisterEvents() {
     for (Listener event : registeredEvents) {
-      PlayerInteractEvent.getHandlerList().unregister(event);
+      HandlerList.unregisterAll(event);
     }
 
     registeredEvents.clear();
