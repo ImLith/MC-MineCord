@@ -3,10 +3,11 @@ package com.lith.minecord.classes;
 import org.jetbrains.annotations.NotNull;
 import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
+import com.lith.minecord.events.discord.BotEvent;
 import com.lith.minecord.events.discord.SendDiscordMessage;
+import com.lith.minecord.events.discord.SlashCommandEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
@@ -73,21 +74,6 @@ public class DiscordManager {
                 });
     }
 
-    public void setChannelTopic(Long serverId, String channelId, String description) {
-        if (client == null)
-            return;
-
-        Guild guild = client.getGuildById(serverId);
-        if (guild == null)
-            return;
-
-        TextChannel channel = guild.getTextChannelById(channelId);
-        if (channel == null)
-            return;
-
-        channel.getManager().setTopic(description).queue();
-    }
-
     private void createBuilder() {
         builder = JDABuilder.createDefault(ConfigManager.botConfig.token);
 
@@ -102,6 +88,11 @@ public class DiscordManager {
         try {
             client = builder.build();
             client.addEventListener(new SendDiscordMessage());
+            client.addEventListener(new BotEvent());
+
+            if (ConfigManager.slashCommands.commandsEnabled)
+                client.addEventListener(new SlashCommandEvent());
+
             client.awaitReady();
         } catch (InterruptedException e) {
             e.printStackTrace();

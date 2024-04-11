@@ -10,6 +10,7 @@ public class ConfigManager extends PluginConfigManager {
     public static DiscordMessage dcMsg;
     public static MinecraftMessage mcMsg;
     public static DcValidationBuilder mcTextValidations;
+    public static SlashCommands slashCommands;
 
     public ConfigManager(final MainPlugin<ConfigManager> plugin) {
         super(plugin);
@@ -17,6 +18,7 @@ public class ConfigManager extends PluginConfigManager {
         botConfig = new BotConfig();
         dcMsg = new DiscordMessage();
         mcMsg = new MinecraftMessage();
+        slashCommands = new SlashCommands();
         mcTextValidations = new DcValidationBuilder();
 
         mcTextValidations.isOnlyFromGuild = true;
@@ -53,6 +55,20 @@ public class ConfigManager extends PluginConfigManager {
             public final String icon = getMessage(ConfigKeys.Minecraft_Messages.Reply.ICON);
             public final String hoverUser = getMessage(ConfigKeys.Minecraft_Messages.Reply.HOVER_USER);
             public final String hoverBot = getMessage(ConfigKeys.Minecraft_Messages.Reply.HOVER_BOT);
+        }
+    }
+
+    public final class SlashCommands {
+        public final Boolean commandsEnabled = getBool(ConfigKeys.Slash_Commands.ENABLE_COMMANDS);
+
+        public final Online online = new Online();
+
+        public final class Online {
+            public final Boolean enabled = getBool(ConfigKeys.Slash_Commands.Online.ENABLED);
+            public final String name = getString(ConfigKeys.Slash_Commands.Online.NAME);
+            public final String description = getString(ConfigKeys.Slash_Commands.Online.DESCRIPTION);
+            public final Boolean isEphemeral = getBool(ConfigKeys.Slash_Commands.Online.IS_EPHEMERAL);
+            public final String format = getString(ConfigKeys.Slash_Commands.Online.FORMAT);
         }
     }
 }

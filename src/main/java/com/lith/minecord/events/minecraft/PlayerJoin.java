@@ -1,4 +1,4 @@
-package com.lith.minecord.events.player;
+package com.lith.minecord.events.minecraft;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

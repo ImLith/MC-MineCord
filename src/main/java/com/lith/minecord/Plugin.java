@@ -4,11 +4,11 @@ import com.lith.lithcore.abstractClasses.MainPlugin;
 import com.lith.lithcore.classes.commands.ReloadConfigCmd;
 import com.lith.minecord.classes.DiscordManager;
 import com.lith.minecord.config.ConfigManager;
-import com.lith.minecord.events.player.PlayerAchievement;
-import com.lith.minecord.events.player.PlayerChat;
-import com.lith.minecord.events.player.PlayerDeath;
-import com.lith.minecord.events.player.PlayerJoin;
-import com.lith.minecord.events.player.PlayerLeave;
+import com.lith.minecord.events.minecraft.PlayerAchievement;
+import com.lith.minecord.events.minecraft.PlayerChat;
+import com.lith.minecord.events.minecraft.PlayerDeath;
+import com.lith.minecord.events.minecraft.PlayerJoin;
+import com.lith.minecord.events.minecraft.PlayerLeave;
 import com.lith.minecord.utils.DcMessageUtil;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
