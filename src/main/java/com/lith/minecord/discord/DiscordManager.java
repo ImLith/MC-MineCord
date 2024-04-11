@@ -5,6 +5,7 @@ import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
@@ -55,6 +56,21 @@ public class DiscordManager {
                 error -> {
                     Static.log.warning("Failed to send message to Discord: " + error);
                 });
+    }
+
+    public void setChannelTopic(String serverId, String channelId, String description) {
+        if (client == null)
+            return;
+
+        Guild guild = client.getGuildById("YOUR_SERVER_ID");
+        if (guild == null)
+            return;
+
+        TextChannel channel = guild.getTextChannelById(channelId);
+        if (channel == null)
+            return;
+
+        channel.getManager().setTopic(description).queue();
     }
 
     private void createBuilder() {
