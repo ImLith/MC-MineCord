@@ -43,6 +43,16 @@ public class Static {
                 public static final String HOVER_BOT = setKey("hover_bot");
             }
         }
+
+        public static final class Slash_Commands extends AbstractConfigKey {
+            public static final String ENABLE_COMMANDS = setKey("enable_commands");
+
+            public static final class Online extends AbstractConfigKey {
+                public static final String ENABLED = setKey("enabled");
+                public static final String NAME = setKey("name");
+                public static final String DESCRIPTION = setKey("description");
+            }
+        }
     }
 
     public static final Collection<GatewayIntent> gatewayIntents = Collections

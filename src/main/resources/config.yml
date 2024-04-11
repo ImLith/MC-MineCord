@@ -27,3 +27,11 @@ minecraft_messages:
     icon: "=>" # Icon that is added after <prefix> but before <format> on reply messages
     hover_user: "[%user_name%]: %content%" # When replying to user message on discord hover text
     hover_bot: "%content%" # When replying to bot message on discord hover text
+
+# To manage command permissions, use Discord interactions section
+slash_commands:
+  enable_commands: true # Disable/Enable all commands
+  online:
+    enabled: true
+    name: online
+    description: Show online users
