@@ -33,8 +33,6 @@ public class Static {
             public static final String REPLY_ICON = setKey("reply_icon");
             public static final String REPLY_HOVER_TEXT = setKey("reply_hover_text");
             public static final String REPLY_HOVER_TEXT_BOT = setKey("reply_hover_text_bot");
-            public static final String ONLINE_COUNTER_FORMAT = setKey("onlineCounterFormat");
-            public static final String OFFLINE_DESCRIPTION = setKey("offlineDescription");
         }
     }
 

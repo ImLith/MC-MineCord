@@ -9,7 +9,6 @@ import com.lith.minecord.events.player.PlayerChat;
 import com.lith.minecord.events.player.PlayerDeath;
 import com.lith.minecord.events.player.PlayerJoin;
 import com.lith.minecord.events.player.PlayerLeave;
-import com.lith.minecord.events.player.UpdateChannelTopic;
 
 public class Plugin extends MainPlugin<ConfigManager> {
   public static Plugin plugin;
@@ -35,12 +34,6 @@ public class Plugin extends MainPlugin<ConfigManager> {
       DiscordManager.init().sendMessage(
           ConfigManager.livechatConfig.channelId,
           ConfigManager.livechatConfig.serverOffline);
-
-    if (!ConfigManager.livechatConfig.offlineDescription.isEmpty())
-      DiscordManager.init().setChannelTopic(
-          ConfigManager.botConfig.serverId,
-          ConfigManager.livechatConfig.channelId,
-          ConfigManager.livechatConfig.offlineDescription);
 
     DiscordManager.init().stop();
     Static.log.info("Plugin disabled");
@@ -69,8 +62,5 @@ public class Plugin extends MainPlugin<ConfigManager> {
 
     if (ConfigManager.livechatConfig.onDeath)
       this.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
-
-    if (!ConfigManager.livechatConfig.onlineCounterFormat.isEmpty())
-      this.getServer().getPluginManager().registerEvents(new UpdateChannelTopic(), this);
   }
 }

@@ -37,7 +37,3 @@ livechat:
   achievement: "**%player_name%** got **%achievement_name%** *%achievement_description%*"
   serverOnline: "**Server is online**"
   serverOffline: "**Server is offline**"
-
-  # Leave empty to not update the channel description with online player count
-  onlineCounterFormat: "**%current%** / %max%"
-  offlineDescription: "Server is offline"

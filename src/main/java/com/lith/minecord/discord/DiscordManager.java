@@ -70,8 +70,6 @@ public class DiscordManager {
         if (channel == null)
             return;
 
-        Static.log.info(description);
-
         channel.getManager().setTopic(description).queue();
     }
 
