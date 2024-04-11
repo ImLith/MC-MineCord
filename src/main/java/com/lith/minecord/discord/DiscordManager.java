@@ -58,17 +58,19 @@ public class DiscordManager {
                 });
     }
 
-    public void setChannelTopic(String serverId, String channelId, String description) {
+    public void setChannelTopic(Long serverId, String channelId, String description) {
         if (client == null)
             return;
 
-        Guild guild = client.getGuildById("YOUR_SERVER_ID");
+        Guild guild = client.getGuildById(serverId);
         if (guild == null)
             return;
 
         TextChannel channel = guild.getTextChannelById(channelId);
         if (channel == null)
             return;
+
+        Static.log.info(description);
 
         channel.getManager().setTopic(description).queue();
     }

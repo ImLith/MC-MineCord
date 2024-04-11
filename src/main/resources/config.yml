@@ -1,7 +1,7 @@
 bot:
   token: "YOUR DISCORD BOT TOKEN"
   invite_link: "YOUR DISCORD INVITE LINK"
-  server_id: "YOUR GUILD (server) ID"
+  server_id: YOUR GUILD (server) ID
 
 livechat:
   # ID of a discord channel to add integration to

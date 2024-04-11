@@ -24,7 +24,7 @@ public class ConfigManager extends PluginConfigManager {
     public final class BotConfig {
         public final String token = getString(ConfigKeys.Bot.TOKEN);
         public final String inviteLink = getString(ConfigKeys.Bot.INVITE_LINK);
-        public final String serverId = getString(ConfigKeys.Bot.SERVER_ID);
+        public final Long serverId = getLong(ConfigKeys.Bot.SERVER_ID);
     }
 
     public final class LivechatConfig {

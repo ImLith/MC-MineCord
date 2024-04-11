@@ -47,6 +47,8 @@ public class Static {
         public static final String CONTENT = "%content%";
         public static final String ACHIEVEMENT_NAME = "%achievement_name%";
         public static final String ACHIEVEMENT_DESCRIPTION = "%achievement_description%";
+        public static final String CURRENT = "%current%";
+        public static final String MAX = "%max%";
     }
 
     final public static class Command {
