@@ -58,43 +58,62 @@ public class McMessageBuilder {
 
         ArrayList<TextComponent> targetResponse = new ArrayList<>();
 
-        if (repliedMessage != null)
+        if (!ConfigManager.mcMsg.prefix.isEmpty())
+            targetResponse.add(buildMessagePrefix());
+
+        if (repliedMessage != null && !ConfigManager.mcMsg.reply.icon.isEmpty())
             targetResponse.add(buildReplySection());
 
         targetResponse.add(buildMessageSection());
+        Component responseComponent = join(noSeparators(), targetResponse);
 
-        return join(noSeparators(), targetResponse);
+        if (ConfigManager.mcMsg.isClickable)
+            responseComponent = responseComponent.clickEvent(openUrl(ConfigManager.botConfig.inviteLink));
+
+        return responseComponent;
     }
 
     private TextComponent buildReplySection() {
-        TextComponent text = text(ConfigManager.livechatConfig.replyIcon + " ");
+        return addHoverText(text(ConfigManager.mcMsg.reply.icon), repliedMessage.getAuthor());
+    }
 
-        User user = repliedMessage.getAuthor();
-        String hoverText = user.isBot()
-                ? ConfigManager.livechatConfig.replyBotHoverText
-                : ConfigManager.livechatConfig.replyHoverText
-                        .replace(Static.MessageKey.USER_NAME,
-                                user.getEffectiveName());
+    private TextComponent buildMessageSection() {
+        User user = message.getAuthor();
+        TextComponent text = text(ConfigManager.mcMsg.format
+                .replace(Static.MessageKey.USER_NAME, user.getEffectiveName())
+                .replace(Static.MessageKey.CONTENT, message.getContentDisplay()));
 
-        hoverText = hoverText.replace(Static.MessageKey.CONTENT, repliedMessage.getContentStripped());
-        text = text.hoverEvent(showText(text(hoverText)));
-
-        if (ConfigManager.livechatConfig.canClick)
-            text = text.clickEvent(openUrl(ConfigManager.botConfig.inviteLink));
+        if (repliedMessage != null)
+            text = addHoverText(text, user);
 
         return text;
     }
 
-    private TextComponent buildMessageSection() {
-        TextComponent text = text(ConfigManager.livechatConfig.formatDiscord
-                .replace(Static.MessageKey.USER_NAME, message.getAuthor().getEffectiveName())
-                .replace(Static.MessageKey.CONTENT, message.getContentDisplay()));
+    private TextComponent buildMessagePrefix() {
+        TextComponent text = text(ConfigManager.mcMsg.prefix);
 
-        if (!ConfigManager.livechatConfig.hoverText.isEmpty())
-            text = text.hoverEvent(showText(text(ConfigManager.livechatConfig.hoverText)));
+        if (!ConfigManager.mcMsg.hover.isEmpty())
+            text = text.hoverEvent(showText(text(ConfigManager.mcMsg.hover)));
 
-        if (ConfigManager.livechatConfig.canClick)
-            text = text.clickEvent(openUrl(ConfigManager.botConfig.inviteLink));
+        return text;
+    }
+
+    private TextComponent addHoverText(TextComponent text, User user) {
+        String hoverText = null;
+
+        if (user.isBot()) {
+            if (!ConfigManager.mcMsg.reply.hoverBot.isEmpty())
+                hoverText = ConfigManager.mcMsg.reply.hoverBot;
+        } else {
+            if (!ConfigManager.mcMsg.reply.hoverUser.isEmpty())
+                hoverText = ConfigManager.mcMsg.reply.hoverUser
+                        .replace(Static.MessageKey.USER_NAME, user.getEffectiveName());
+        }
+
+        if (hoverText != null) {
+            hoverText = hoverText.replace(Static.MessageKey.CONTENT, repliedMessage.getContentStripped());
+            text = text.hoverEvent(showText(text(hoverText)));
+        }
 
         return text;
     }

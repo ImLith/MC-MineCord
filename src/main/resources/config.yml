@@ -12,6 +12,7 @@ discord_messages:
   death: true # Send onDeath messages
   server_on: "**Server is online**" # Whenever a server comes online
   server_off: "**Server is offline**" # Whenever the server goes offline
+  format: "**[%player_name%]** %content%"
 
 # Supports color codes and unicodes
 # Leaving any of these values empty will disable the event

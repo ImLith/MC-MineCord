@@ -1,8 +1,9 @@
-package com.lith.minecord.discord;
+package com.lith.minecord.classes;
 
 import org.jetbrains.annotations.NotNull;
 import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
+import com.lith.minecord.events.discord.SendDiscordMessage;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -26,14 +27,21 @@ public class DiscordManager {
         return init;
     }
 
+    public JDA getClient() {
+        return client;
+    }
+
+    public Boolean isOnline() {
+        return client != null;
+    }
+
     public void start() {
-        if (client == null) {
+        if (!isOnline())
             createClient();
-        }
     }
 
     public void stop() {
-        if (client != null) {
+        if (isOnline()) {
             client.shutdown();
             client = null;
         }
@@ -48,6 +56,13 @@ public class DiscordManager {
 
         TextChannel channel = client.getTextChannelById(channelId);
         if (channel == null)
+            return;
+
+        sendMessage(channel, content);
+    }
+
+    public void sendMessage(@NotNull TextChannel channel, @NotNull String content) {
+        if (client == null)
             return;
 
         channel.sendMessage(content).queue(
@@ -86,7 +101,7 @@ public class DiscordManager {
     private void createClient() {
         try {
             client = builder.build();
-            client.addEventListener(new DiscordEvents());
+            client.addEventListener(new SendDiscordMessage());
             client.awaitReady();
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -36,6 +36,7 @@ public class ConfigManager extends PluginConfigManager {
         public final String achievement = getString(ConfigKeys.Discord_Messages.ACHIEVEMENT);
         public final String serverOn = getString(ConfigKeys.Discord_Messages.SERVER_ON);
         public final String serverOff = getString(ConfigKeys.Discord_Messages.SERVER_OFF);
+        public final String format = getString(ConfigKeys.Discord_Messages.FORMAT);
         public final Boolean onDeath = getBool(ConfigKeys.Discord_Messages.DEATH);
     }
 
