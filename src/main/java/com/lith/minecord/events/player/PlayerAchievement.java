@@ -1,12 +1,14 @@
 package com.lith.minecord.events.player;
 
 import org.bukkit.advancement.Advancement;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import com.lith.minecord.Static;
+import com.lith.minecord.classes.DiscordManager;
 import com.lith.minecord.config.ConfigManager;
-import com.lith.minecord.discord.DiscordManager;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import io.papermc.paper.advancement.AdvancementDisplay;
@@ -20,7 +22,8 @@ public class PlayerAchievement implements Listener {
         if (display == null)
             return;
 
-        if (!event.getPlayer().getAdvancementProgress(advancement).isDone())
+        Player player = event.getPlayer();
+        if (!player.getAdvancementProgress(advancement).isDone())
             return;
 
         Component titleComponent = display.title();
@@ -37,9 +40,9 @@ public class PlayerAchievement implements Listener {
                 : "";
 
         DiscordManager.init().sendMessage(
-                ConfigManager.livechatConfig.channelId,
-                ConfigManager.livechatConfig.achievement
-                        .replace(Static.MessageKey.PLAYER_NAME, event.getPlayer().getName())
+                Static.textChannel,
+                ConfigManager.dcMsg.achievement
+                        .replace(Static.MessageKey.PLAYER_NAME, player.getName())
                         .replace(Static.MessageKey.ACHIEVEMENT_NAME, advancementTitle)
                         .replace(Static.MessageKey.ACHIEVEMENT_DESCRIPTION, advancementDescription));
     }

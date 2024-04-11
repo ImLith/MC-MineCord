@@ -1,10 +1,12 @@
-package com.lith.minecord.discord;
+package com.lith.minecord.classes;
 
 import org.jetbrains.annotations.NotNull;
 import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
+import com.lith.minecord.events.discord.SendDiscordMessage;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
@@ -25,14 +27,21 @@ public class DiscordManager {
         return init;
     }
 
+    public JDA getClient() {
+        return client;
+    }
+
+    public Boolean isOnline() {
+        return client != null;
+    }
+
     public void start() {
-        if (client == null) {
+        if (!isOnline())
             createClient();
-        }
     }
 
     public void stop() {
-        if (client != null) {
+        if (isOnline()) {
             client.shutdown();
             client = null;
         }
@@ -49,12 +58,34 @@ public class DiscordManager {
         if (channel == null)
             return;
 
+        sendMessage(channel, content);
+    }
+
+    public void sendMessage(@NotNull TextChannel channel, @NotNull String content) {
+        if (client == null)
+            return;
+
         channel.sendMessage(content).queue(
                 success -> {
                 },
                 error -> {
                     Static.log.warning("Failed to send message to Discord: " + error);
                 });
+    }
+
+    public void setChannelTopic(Long serverId, String channelId, String description) {
+        if (client == null)
+            return;
+
+        Guild guild = client.getGuildById(serverId);
+        if (guild == null)
+            return;
+
+        TextChannel channel = guild.getTextChannelById(channelId);
+        if (channel == null)
+            return;
+
+        channel.getManager().setTopic(description).queue();
     }
 
     private void createBuilder() {
@@ -70,7 +101,7 @@ public class DiscordManager {
     private void createClient() {
         try {
             client = builder.build();
-            client.addEventListener(new DiscordEvents());
+            client.addEventListener(new SendDiscordMessage());
             client.awaitReady();
         } catch (InterruptedException e) {
             e.printStackTrace();
