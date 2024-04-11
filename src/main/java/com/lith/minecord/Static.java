@@ -14,25 +14,31 @@ public class Static {
     final public static class ConfigKeys {
         public static final class Bot extends AbstractConfigKey {
             public static final String TOKEN = setKey("token");
-            public static final String INVITE_LINK = setKey("invite_link");
             public static final String SERVER_ID = setKey("server_id");
+            public static final String CHANNEL_ID = setKey("channel_id");
+            public static final String INVITE_LINK = setKey("invite_link");
         }
 
-        public static final class Livechat extends AbstractConfigKey {
-            public static final String CHANNEL_ID = setKey("channel_id");
-            public static final String FORMAT_DISCORD = setKey("format_discord");
-            public static final String FORMAT_MINECRAFT = setKey("format_minecraft");
-            public static final String HOVER_TEXT = setKey("hoverText");
-            public static final String CAN_CLICK = setKey("canClick");
-            public static final String ON_DEATH = setKey("onDeath");
-            public static final String JOIN_MESSAGE = setKey("joinMessage");
-            public static final String LEAVE_MESSAGE = setKey("leaveMessage");
+        public static final class Discord_Messages extends AbstractConfigKey {
+            public static final String JOIN = setKey("join");
+            public static final String LEAVE = setKey("leave");
             public static final String ACHIEVEMENT = setKey("achievement");
-            public static final String SERVER_ONLINE = setKey("serverOnline");
-            public static final String SERVER_OFFLINE = setKey("serverOffline");
-            public static final String REPLY_ICON = setKey("reply_icon");
-            public static final String REPLY_HOVER_TEXT = setKey("reply_hover_text");
-            public static final String REPLY_HOVER_TEXT_BOT = setKey("reply_hover_text_bot");
+            public static final String DEATH = setKey("death");
+            public static final String SERVER_ON = setKey("server_on");
+            public static final String SERVER_OFF = setKey("server_off");
+        }
+
+        public static final class Minecraft_Messages extends AbstractConfigKey {
+            public static final String CLICKABLE = setKey("clickable");
+            public static final String PREFIX = setKey("prefix");
+            public static final String HOVER = setKey("hover");
+            public static final String FORMAT = setKey("format");
+
+            public static final class Reply extends AbstractConfigKey {
+                public static final String ICON = setKey("icon");
+                public static final String HOVER_USER = setKey("hover_user");
+                public static final String HOVER_BOT = setKey("hover_bot");
+            }
         }
     }
 

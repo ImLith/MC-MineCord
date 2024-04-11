@@ -1,39 +1,28 @@
 bot:
-  token: "YOUR DISCORD BOT TOKEN"
-  invite_link: "YOUR DISCORD INVITE LINK"
-  server_id: YOUR GUILD (server) ID
+  token: "YOUR DISCORD BOT TOKEN" # String
+  server_id: YOUR GUILD (server) ID # Number
+  invite_link: "YOUR DISCORD INVITE LINK" # Url
+  channel_id: "YOUR DISCORD CHANNEL ID where you want this functionality to happen" # String
 
-livechat:
-  # ID of a discord channel to add integration to
-  channel_id: "ID"
-
-  # Supports color codes and unicodes
-  reply_icon: "=>"
-  reply_hover_text: "[%user_name%]: %content%"
-  # If replying to bot message
-  reply_hover_text_bot: "%content%"
-
-  # In what Format the Discord => MineCraft message should render
-  # Supports color codes and unicodes
-  format_discord: "[%user_name%]: %content%"
-
-  # In what Format the MineCraft => Discord message should render
-  format_minecraft: "**%player_name%** %content%"
-
-  # Leave empty to not add hover effect
-  # Supports color codes and unicodes
-  hoverText: "Sent from Discord serve.\nClick to join!"
-
-  # If set to true (default) will take the user to your server specified in the invite link
-  canClick: true
-
-  # If set to true (default) will send death messages to Discord
-  onDeath: true
-
-  # In what Format the MineCraft => Discord message should render
-  # Leave empty to not send such event messages to Discord
-  joinMessage: "**%player_name%** *Joined the server*"
-  leaveMessage: "**%player_name%** *Left the server*"
+# Leaving any of these values empty will disable the event
+discord_messages:
+  join: "**%player_name%** *Joined the server*"
+  leave: "**%player_name%** *Left the server*"
   achievement: "**%player_name%** got **%achievement_name%** *%achievement_description%*"
-  serverOnline: "**Server is online**"
-  serverOffline: "**Server is offline**"
+  death: true # Send onDeath messages
+  server_on: "**Server is online**" # Whenever a server comes online
+  server_off: "**Server is offline**" # Whenever the server goes offline
+
+# Supports color codes and unicodes
+# Leaving any of these values empty will disable the event
+minecraft_messages:
+  clickable: true # OnClick will invite user to discord if 'server_id' is set
+  prefix: "[DC] <%user_name%>:" # Will be added to any message send from discord to minecraft
+  hover: "Sent from Discord server.\nClick to join!" # Hovering over a selected text segmant will show text
+  format: "&7%content%" # Discord message content. Can also add '%user_name%'
+
+  # Extra elements whenever the user replies to a message
+  reply:
+    icon: "=>" # Icon that is added after <prefix> but before <format> on reply messages
+    hover_user: "[%user_name%]: %content%" # When replying to user message on discord hover text
+    hover_bot: "%content%" # When replying to bot message on discord hover text
