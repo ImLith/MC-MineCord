@@ -1,6 +1,7 @@
 package com.lith.minecord;
 
 import com.lith.lithcore.abstractClasses.MainPlugin;
+import com.lith.lithcore.classes.commands.ReloadConfigCmd;
 import com.lith.minecord.config.ConfigManager;
 import com.lith.minecord.discord.DiscordManager;
 import com.lith.minecord.events.player.PlayerAchievement;
@@ -15,9 +16,10 @@ public class Plugin extends MainPlugin<ConfigManager> {
   public void onEnable() {
     Plugin.plugin = this;
 
-    registerConfig();
+    registerConfigs();
     DiscordManager.init().start();
     registerEvents();
+    registerCommands();
 
     Static.log.info("Plugin enabled");
 
@@ -37,8 +39,13 @@ public class Plugin extends MainPlugin<ConfigManager> {
     Static.log.info("Plugin disabled");
   }
 
-  public void registerConfig() {
+  @Override
+  public void registerConfigs() {
     new ConfigManager(this);
+  }
+
+  private void registerCommands() {
+    new ReloadConfigCmd<Plugin>(this, Static.Command.PermissionKeys.RELOAD, Static.Command.Names.RELOAD);
   }
 
   private void registerEvents() {

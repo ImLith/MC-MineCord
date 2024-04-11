@@ -10,3 +10,14 @@ website: https://github.com/ImLith/MC-MineCord
 
 depend: [LithCore]
 softdepend: []
+
+commands:
+  dcReload:
+    description: Reload minecord configs
+    usage: /<command>
+    permission: minecord.reload
+
+permissions:
+  minecord.reload:
+    description: Use the /dcReload command
+    default: op

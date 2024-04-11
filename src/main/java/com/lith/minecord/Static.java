@@ -45,4 +45,15 @@ public class Static {
         public static final String ACHIEVEMENT_NAME = "%achievement_name%";
         public static final String ACHIEVEMENT_DESCRIPTION = "%achievement_description%";
     }
+
+    final public static class Command {
+        final public static class Names {
+            public static final String RELOAD = "dcReload";
+        }
+
+        final public static class PermissionKeys {
+            public static final String PREFIX = "minecord";
+            public static final String RELOAD = PermissionKeys.PREFIX + "reload";
+        }
+    }
 }
