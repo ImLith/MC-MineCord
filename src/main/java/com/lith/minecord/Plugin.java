@@ -11,13 +11,8 @@ import com.lith.minecord.events.player.PlayerJoin;
 import com.lith.minecord.events.player.PlayerLeave;
 import com.lith.minecord.utils.DcMessageUtil;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import java.util.ArrayList;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 
 public class Plugin extends MainPlugin<ConfigManager> {
-  private ArrayList<Listener> registeredEvents = new ArrayList<>();
-
   public static Plugin plugin;
 
   public void onEnable() {
@@ -49,7 +44,7 @@ public class Plugin extends MainPlugin<ConfigManager> {
   public void registerConfigs() {
     Static.textChannel = null;
 
-    unregisterEvents();
+    unregisterAllEvents();
     new ConfigManager(this);
 
     if (!DiscordManager.init().isOnline())
@@ -83,19 +78,6 @@ public class Plugin extends MainPlugin<ConfigManager> {
 
     if (ConfigManager.dcMsg.onDeath)
       registerEvent(new PlayerDeath());
-  }
-
-  private void registerEvent(Listener event) {
-    getServer().getPluginManager().registerEvents(event, this);
-    registeredEvents.add(event);
-  }
-
-  private void unregisterEvents() {
-    for (Listener event : registeredEvents) {
-      HandlerList.unregisterAll(event);
-    }
-
-    registeredEvents.clear();
   }
 
   private void validateChannel() {
