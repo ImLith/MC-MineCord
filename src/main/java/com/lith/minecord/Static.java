@@ -29,6 +29,9 @@ public class Static {
             public static final String ACHIEVEMENT = setKey("achievement");
             public static final String SERVER_ONLINE = setKey("serverOnline");
             public static final String SERVER_OFFLINE = setKey("serverOffline");
+            public static final String REPLY_ICON = setKey("reply_icon");
+            public static final String REPLY_HOVER_TEXT = setKey("reply_hover_text");
+            public static final String REPLY_HOVER_TEXT_BOT = setKey("reply_hover_text_bot");
         }
     }
 

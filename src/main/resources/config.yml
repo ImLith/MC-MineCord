@@ -6,6 +6,12 @@ livechat:
   # ID of a discord channel to add integration to
   channel_id: "ID"
 
+  # Supports color codes and unicodes
+  reply_icon: "=>"
+  reply_hover_text: "[%user_name%]: %content%"
+  # If replying to bot message
+  reply_hover_text_bot: "%content%"
+
   # In what Format the Discord => MineCraft message should render
   # Supports color codes and unicodes
   format_discord: "[%user_name%]: %content%"
