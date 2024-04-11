@@ -24,6 +24,7 @@ public class ConfigManager extends PluginConfigManager {
     public final class BotConfig {
         public final String token = getString(ConfigKeys.Bot.TOKEN);
         public final String inviteLink = getString(ConfigKeys.Bot.INVITE_LINK);
+        public final String serverId = getString(ConfigKeys.Bot.SERVER_ID);
     }
 
     public final class LivechatConfig {
@@ -41,5 +42,7 @@ public class ConfigManager extends PluginConfigManager {
         public final String replyIcon = getMessage(ConfigKeys.Livechat.REPLY_ICON);
         public final String replyHoverText = getMessage(ConfigKeys.Livechat.REPLY_HOVER_TEXT);
         public final String replyBotHoverText = getMessage(ConfigKeys.Livechat.REPLY_HOVER_TEXT_BOT);
+        public final String onlineCounterFormat = getMessage(ConfigKeys.Livechat.ONLINE_COUNTER_FORMAT);
+        public final String offlineDescription = getMessage(ConfigKeys.Livechat.OFFLINE_DESCRIPTION);
     }
 }

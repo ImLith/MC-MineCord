@@ -15,6 +15,7 @@ public class Static {
         public static final class Bot extends AbstractConfigKey {
             public static final String TOKEN = setKey("token");
             public static final String INVITE_LINK = setKey("invite_link");
+            public static final String SERVER_ID = setKey("server_id");
         }
 
         public static final class Livechat extends AbstractConfigKey {
@@ -32,6 +33,8 @@ public class Static {
             public static final String REPLY_ICON = setKey("reply_icon");
             public static final String REPLY_HOVER_TEXT = setKey("reply_hover_text");
             public static final String REPLY_HOVER_TEXT_BOT = setKey("reply_hover_text_bot");
+            public static final String ONLINE_COUNTER_FORMAT = setKey("onlineCounterFormat");
+            public static final String OFFLINE_DESCRIPTION = setKey("offlineDescription");
         }
     }
 

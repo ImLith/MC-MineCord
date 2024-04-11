@@ -1,6 +1,7 @@
 bot:
   token: "YOUR DISCORD BOT TOKEN"
   invite_link: "YOUR DISCORD INVITE LINK"
+  server_id: "YOUR GUILD (server) ID"
 
 livechat:
   # ID of a discord channel to add integration to
@@ -36,3 +37,7 @@ livechat:
   achievement: "**%player_name%** got **%achievement_name%** *%achievement_description%*"
   serverOnline: "**Server is online**"
   serverOffline: "**Server is offline**"
+
+  # Leave empty to not update the channel description with online player count
+  onlineCounterFormat: "**%current%** / %max%"
+  offlineDescription: "Server is offline"
