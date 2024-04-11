@@ -67,6 +67,8 @@ public class ConfigManager extends PluginConfigManager {
             public final Boolean enabled = getBool(ConfigKeys.Slash_Commands.Online.ENABLED);
             public final String name = getString(ConfigKeys.Slash_Commands.Online.NAME);
             public final String description = getString(ConfigKeys.Slash_Commands.Online.DESCRIPTION);
+            public final Boolean isEphemeral = getBool(ConfigKeys.Slash_Commands.Online.IS_EPHEMERAL);
+            public final String format = getString(ConfigKeys.Slash_Commands.Online.FORMAT);
         }
     }
 }

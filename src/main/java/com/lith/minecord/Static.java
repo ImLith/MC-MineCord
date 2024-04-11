@@ -51,6 +51,8 @@ public class Static {
                 public static final String ENABLED = setKey("enabled");
                 public static final String NAME = setKey("name");
                 public static final String DESCRIPTION = setKey("description");
+                public static final String IS_EPHEMERAL = setKey("is_ephemeral");
+                public static final String FORMAT = setKey("format");
             }
         }
     }

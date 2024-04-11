@@ -35,3 +35,5 @@ slash_commands:
     enabled: true
     name: online
     description: Show online users
+    is_ephemeral: true # Display only for user (default) or everyone
+    format: "Currently online %current% players out of %max%"

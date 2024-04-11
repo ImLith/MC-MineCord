@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import org.bukkit.Bukkit;
 import java.util.List;
 import com.lith.lithcore.utils.PlayerUtil;
+import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -14,14 +15,16 @@ public class SlashCommandEvent extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@Nonnull SlashCommandInteractionEvent event) {
         if (event.getName().equals(ConfigManager.slashCommands.online.name.toLowerCase())) {
-            event.deferReply(true).queue();
+            event.deferReply(ConfigManager.slashCommands.online.isEphemeral).queue();
 
             List<String> playerNames = PlayerUtil.getOnlinePlayerNames();
             int onlinePlayers = playerNames.size();
             EmbedBuilder embedBuilder = new EmbedBuilder();
 
             embedBuilder.setColor(Color.RED)
-                    .setAuthor("Currently online " + onlinePlayers + " players out of " + Bukkit.getMaxPlayers());
+                    .setAuthor(ConfigManager.slashCommands.online.format
+                            .replace(Static.MessageKey.CURRENT, String.valueOf(onlinePlayers))
+                            .replace(Static.MessageKey.MAX, String.valueOf(Bukkit.getMaxPlayers())));
 
             if (onlinePlayers > 0)
                 embedBuilder.setDescription("**" + String.join("** | **", playerNames) + "**");
