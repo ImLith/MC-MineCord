@@ -3,20 +3,12 @@ package com.lith.minecord.discord;
 import javax.annotation.Nonnull;
 import com.lith.minecord.Plugin;
 import com.lith.minecord.Static;
-import com.lith.minecord.config.ConfigManager;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageType;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import com.lith.minecord.classes.McMessageBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.events.session.ShutdownEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.kyori.adventure.text.TextComponent;
-import static net.kyori.adventure.text.Component.text;
-import static net.kyori.adventure.text.event.HoverEvent.showText;
-import static net.kyori.adventure.text.event.ClickEvent.openUrl;
+import net.kyori.adventure.text.Component;
 
 public class DiscordEvents extends ListenerAdapter {
     @Override
@@ -32,34 +24,14 @@ public class DiscordEvents extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
-        if (!event.isFromGuild())
+        McMessageBuilder msgBuilder = new McMessageBuilder(event);
+        if (!msgBuilder.isValid())
             return;
 
-        MessageChannel channel = event.getChannel();
-        if (!(channel instanceof TextChannel))
+        Component msg = msgBuilder.addReplier().build();
+        if (msg == null)
             return;
 
-        if (!channel.getId().equals(ConfigManager.livechatConfig.channelId))
-            return;
-
-        User author = event.getAuthor();
-        if (author.isBot())
-            return;
-
-        Message message = event.getMessage();
-        if (message.getType() != MessageType.DEFAULT)
-            return;
-
-        TextComponent text = text(ConfigManager.livechatConfig.formatDiscord
-                .replace(Static.MessageKey.USER_NAME, author.getEffectiveName())
-                .replace(Static.MessageKey.CONTENT, message.getContentRaw()));
-
-        if (!ConfigManager.livechatConfig.hoverText.isEmpty())
-            text = text.hoverEvent(showText(text(ConfigManager.livechatConfig.hoverText)));
-
-        if (ConfigManager.livechatConfig.canClick)
-            text = text.clickEvent(openUrl(ConfigManager.botConfig.inviteLink));
-
-        Plugin.plugin.getServer().broadcast(text);
+        Plugin.plugin.getServer().broadcast(msg);
     }
 }
