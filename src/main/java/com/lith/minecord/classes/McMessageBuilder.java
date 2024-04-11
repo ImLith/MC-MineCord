@@ -78,19 +78,19 @@ public class McMessageBuilder {
     }
 
     private TextComponent buildMessageSection() {
-        User user = message.getAuthor();
         TextComponent text = text(ConfigManager.mcMsg.format
-                .replace(Static.MessageKey.USER_NAME, user.getEffectiveName())
+                .replace(Static.MessageKey.USER_NAME, message.getAuthor().getEffectiveName())
                 .replace(Static.MessageKey.CONTENT, message.getContentDisplay()));
 
         if (repliedMessage != null)
-            text = addHoverText(text, user);
+            text = addHoverText(text, repliedMessage.getAuthor());
 
         return text;
     }
 
     private TextComponent buildMessagePrefix() {
-        TextComponent text = text(ConfigManager.mcMsg.prefix);
+        TextComponent text = text(ConfigManager.mcMsg.prefix
+                .replace(Static.MessageKey.USER_NAME, message.getAuthor().getEffectiveName()));
 
         if (!ConfigManager.mcMsg.hover.isEmpty())
             text = text.hoverEvent(showText(text(ConfigManager.mcMsg.hover)));
