@@ -5,19 +5,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
+import com.lith.minecord.Plugin;
 import com.lith.minecord.Static;
-import com.lith.minecord.classes.DiscordManager;
-import com.lith.minecord.config.ConfigManager;
-
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import io.papermc.paper.advancement.AdvancementDisplay;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class PlayerAchievement implements Listener {
+    private final Plugin plugin;
+
     @EventHandler
     public void onPlayerAchievement(PlayerAdvancementDoneEvent event) {
         Advancement advancement = event.getAdvancement();
-
         AdvancementDisplay display = advancement.getDisplay();
         if (display == null)
             return;
@@ -39,9 +40,9 @@ public class PlayerAchievement implements Listener {
                 ? PlainTextComponentSerializer.plainText().serialize(descriptionComponent)
                 : "";
 
-        DiscordManager.init().sendMessage(
+        plugin.getDiscordManager().sendMessage(
                 Static.textChannel,
-                ConfigManager.dcMsg.achievement
+                plugin.configs.dcMsg.achievement
                         .replace(Static.MessageKey.PLAYER_NAME, player.getName())
                         .replace(Static.MessageKey.ACHIEVEMENT_NAME, advancementTitle)
                         .replace(Static.MessageKey.ACHIEVEMENT_DESCRIPTION, advancementDescription));

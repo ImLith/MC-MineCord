@@ -6,26 +6,27 @@ import com.lith.minecord.Static.ConfigKeys;
 import com.lith.minecord.classes.DcValidationBuilder;
 
 public class ConfigManager extends AbstractConfigManager<Plugin, ConfigManager> {
-    public static BotConfig botConfig;
-    public static DiscordMessage dcMsg;
-    public static MinecraftMessage mcMsg;
-    public static DcValidationBuilder mcTextValidations;
-    public static SlashCommands slashCommands;
+    public BotConfig botConfig;
+    public DiscordMessage dcMsg;
+    public MinecraftMessage mcMsg;
+    public DcValidationBuilder mcTextValidations;
+    public SlashCommands slashCommands;
 
     public ConfigManager(final Plugin plugin) {
         super(plugin);
 
         mcTextValidations = new DcValidationBuilder();
         mcTextValidations.isOnlyFromGuild = true;
-        mcTextValidations.requiredChannelId = botConfig.channelId;
     }
 
     @Override
     public void load() {
+        super.load();
         botConfig = new BotConfig();
         dcMsg = new DiscordMessage();
         mcMsg = new MinecraftMessage();
         slashCommands = new SlashCommands();
+        mcTextValidations.requiredChannelId = botConfig.channelId;
     }
 
     public final class BotConfig {

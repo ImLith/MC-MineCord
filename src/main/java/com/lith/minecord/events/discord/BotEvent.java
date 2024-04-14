@@ -3,7 +3,6 @@ package com.lith.minecord.events.discord;
 import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
 import com.lith.minecord.Plugin;
-import com.lith.minecord.config.ConfigManager;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -24,7 +23,7 @@ public class BotEvent extends ListenerAdapter {
 
         plugin.log.info("Bot " + botName + " is Ready!");
 
-        if (ConfigManager.slashCommands.commandsEnabled)
+        if (plugin.configs.slashCommands.commandsEnabled)
             registerGuildCommands(client);
     }
 
@@ -34,17 +33,17 @@ public class BotEvent extends ListenerAdapter {
     }
 
     private void registerGuildCommands(JDA client) {
-        Guild guild = client.getGuildById(ConfigManager.botConfig.serverId);
+        Guild guild = client.getGuildById(plugin.configs.botConfig.serverId);
         if (guild == null)
             return;
 
-        if (ConfigManager.slashCommands.online.enabled
-                && !ConfigManager.slashCommands.online.name.isEmpty()) {
+        if (plugin.configs.slashCommands.online.enabled
+                && !plugin.configs.slashCommands.online.name.isEmpty()) {
 
             guild.updateCommands().addCommands(
                     Commands.slash(
-                            ConfigManager.slashCommands.online.name.toLowerCase(),
-                            ConfigManager.slashCommands.online.description))
+                            plugin.configs.slashCommands.online.name.toLowerCase(),
+                            plugin.configs.slashCommands.online.description))
                     .queue();
         }
     }

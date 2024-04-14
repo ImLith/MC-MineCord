@@ -3,10 +3,10 @@ package com.lith.minecord.classes;
 import org.jetbrains.annotations.NotNull;
 import com.lith.minecord.Plugin;
 import com.lith.minecord.Static;
-import com.lith.minecord.config.ConfigManager;
 import com.lith.minecord.events.discord.BotEvent;
 import com.lith.minecord.events.discord.SendDiscordMessage;
 import com.lith.minecord.events.discord.SlashCommandEvent;
+import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -14,28 +14,14 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class DiscordManager {
-    private static Plugin plugin;
-    private static DiscordManager init = null;
+    private final Plugin plugin;
     private JDABuilder builder = null;
+    @Getter
     private JDA client = null;
 
-    private DiscordManager() {
+    public DiscordManager(@NotNull Plugin plugin) {
+        this.plugin = plugin;
         createBuilder();
-    }
-
-    public static void setPlugin(Plugin plugin) {
-        DiscordManager.plugin = plugin;
-    }
-
-    public static DiscordManager init() {
-        if (init == null)
-            init = new DiscordManager();
-
-        return init;
-    }
-
-    public JDA getClient() {
-        return client;
     }
 
     public Boolean isOnline() {
@@ -81,7 +67,7 @@ public class DiscordManager {
     }
 
     private void createBuilder() {
-        builder = JDABuilder.createDefault(ConfigManager.botConfig.token);
+        builder = JDABuilder.createDefault(plugin.configs.botConfig.token);
 
         builder.disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
         builder.disableCache(CacheFlag.ACTIVITY);
@@ -93,13 +79,11 @@ public class DiscordManager {
     private void createClient() {
         try {
             client = builder.build();
-            if (plugin != null) {
-                client.addEventListener(new SendDiscordMessage(plugin));
-                client.addEventListener(new BotEvent(plugin));
-            }
+            client.addEventListener(new SendDiscordMessage(plugin));
+            client.addEventListener(new BotEvent(plugin));
 
-            if (ConfigManager.slashCommands.commandsEnabled)
-                client.addEventListener(new SlashCommandEvent());
+            if (plugin.configs.slashCommands.commandsEnabled)
+                client.addEventListener(new SlashCommandEvent(plugin));
 
             client.awaitReady();
         } catch (InterruptedException e) {

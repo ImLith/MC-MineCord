@@ -10,42 +10,51 @@ import com.lith.minecord.events.minecraft.PlayerDeath;
 import com.lith.minecord.events.minecraft.PlayerJoin;
 import com.lith.minecord.events.minecraft.PlayerLeave;
 import com.lith.minecord.utils.DcMessageUtil;
+import lombok.Getter;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 public class Plugin extends AbstractPlugin<Plugin, ConfigManager> {
+  @Getter
+  private DiscordManager discordManager = null;
+
+  @Override
   public void onEnable() {
     configs = new ConfigManager(this);
-    DiscordManager.setPlugin(this);
     super.onEnable();
   }
 
   @Override
   public void onDisable() {
-    if (isValid() && !ConfigManager.dcMsg.serverOff.isEmpty())
-      DiscordManager.init().sendMessage(
-          Static.textChannel,
-          ConfigManager.dcMsg.serverOff);
+    if (discordManager != null) {
+      if (isValid() && !configs.dcMsg.serverOff.isEmpty())
+        discordManager.sendMessage(
+            Static.textChannel,
+            configs.dcMsg.serverOff);
 
-    DiscordManager.init().stop();
+      discordManager.stop();
+    }
+
     super.onDisable();
   }
 
   @Override
-  protected void preRegisterRunnables() {
-    if (isValid() && !ConfigManager.dcMsg.serverOn.isEmpty()) {
-      DiscordManager.init().sendMessage(
-          Static.textChannel,
-          ConfigManager.dcMsg.serverOn);
-    }
+  public void reloadConfigs() {
+    super.reloadConfigs();
+    registerEvents();
   }
 
   @Override
-  public void registerConfigs() {
+  protected void registerConfigs() {
+    super.registerConfigs();
     Static.textChannel = null;
 
     unregisterAllEvents();
-    if (!DiscordManager.init().isOnline())
-      DiscordManager.init().start();
+
+    if (discordManager == null)
+      discordManager = new DiscordManager(this);
+
+    if (!discordManager.isOnline())
+      discordManager.start();
 
     validateChannel();
   }
@@ -62,24 +71,33 @@ public class Plugin extends AbstractPlugin<Plugin, ConfigManager> {
       return;
     }
 
-    if (!ConfigManager.dcMsg.format.isEmpty())
-      registerEvent(new PlayerChat());
+    if (!configs.dcMsg.format.isEmpty())
+      registerEvent(new PlayerChat(this));
 
-    if (!ConfigManager.dcMsg.join.isEmpty())
-      registerEvent(new PlayerJoin());
+    if (!configs.dcMsg.join.isEmpty())
+      registerEvent(new PlayerJoin(this));
 
-    if (!ConfigManager.dcMsg.leave.isEmpty())
-      registerEvent(new PlayerLeave());
+    if (!configs.dcMsg.leave.isEmpty())
+      registerEvent(new PlayerLeave(this));
 
-    if (!ConfigManager.dcMsg.achievement.isEmpty())
-      registerEvent(new PlayerAchievement());
+    if (!configs.dcMsg.achievement.isEmpty())
+      registerEvent(new PlayerAchievement(this));
 
-    if (ConfigManager.dcMsg.onDeath)
-      registerEvent(new PlayerDeath());
+    if (configs.dcMsg.onDeath)
+      registerEvent(new PlayerDeath(this));
+  }
+
+  @Override
+  protected void preRegisterRunnables() {
+    if (isValid() && !configs.dcMsg.serverOn.isEmpty()) {
+      discordManager.sendMessage(
+          Static.textChannel,
+          configs.dcMsg.serverOn);
+    }
   }
 
   private void validateChannel() {
-    TextChannel channel = DiscordManager.init().getClient().getTextChannelById(ConfigManager.botConfig.channelId);
+    TextChannel channel = discordManager.getClient().getTextChannelById(configs.botConfig.channelId);
     Static.textChannel = DcMessageUtil.isInTextChannel(channel) ? channel : null;
   }
 
