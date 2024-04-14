@@ -1,6 +1,7 @@
 package com.lith.minecord.classes;
 
 import org.jetbrains.annotations.NotNull;
+import com.lith.minecord.Plugin;
 import com.lith.minecord.Static;
 import com.lith.minecord.config.ConfigManager;
 import com.lith.minecord.events.discord.BotEvent;
@@ -13,12 +14,17 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class DiscordManager {
+    private static Plugin plugin;
     private static DiscordManager init = null;
     private JDABuilder builder = null;
     private JDA client = null;
 
     private DiscordManager() {
         createBuilder();
+    }
+
+    public static void setPlugin(Plugin plugin) {
+        DiscordManager.plugin = plugin;
     }
 
     public static DiscordManager init() {
@@ -70,7 +76,7 @@ public class DiscordManager {
                 success -> {
                 },
                 error -> {
-                    Static.log.warning("Failed to send message to Discord: " + error);
+                    plugin.log.warning("Failed to send message to Discord: " + error);
                 });
     }
 
@@ -87,8 +93,10 @@ public class DiscordManager {
     private void createClient() {
         try {
             client = builder.build();
-            client.addEventListener(new SendDiscordMessage());
-            client.addEventListener(new BotEvent());
+            if (plugin != null) {
+                client.addEventListener(new SendDiscordMessage(plugin));
+                client.addEventListener(new BotEvent(plugin));
+            }
 
             if (ConfigManager.slashCommands.commandsEnabled)
                 client.addEventListener(new SlashCommandEvent());

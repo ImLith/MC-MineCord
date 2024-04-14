@@ -1,8 +1,10 @@
 package com.lith.minecord.events.discord;
 
 import javax.annotation.Nonnull;
-import com.lith.minecord.Static;
+import org.jetbrains.annotations.NotNull;
+import com.lith.minecord.Plugin;
 import com.lith.minecord.config.ConfigManager;
+import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.JDA;
@@ -10,13 +12,17 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.events.session.ShutdownEvent;
 
+@RequiredArgsConstructor
 public class BotEvent extends ListenerAdapter {
+    @NotNull
+    private final Plugin plugin;
+
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
         JDA client = event.getJDA();
         String botName = client.getSelfUser().getName();
 
-        Static.log.info("Bot " + botName + " is Ready!");
+        plugin.log.info("Bot " + botName + " is Ready!");
 
         if (ConfigManager.slashCommands.commandsEnabled)
             registerGuildCommands(client);
@@ -24,7 +30,7 @@ public class BotEvent extends ListenerAdapter {
 
     @Override
     public void onShutdown(@Nonnull ShutdownEvent event) {
-        Static.log.info("Discord Bot shutdown!");
+        plugin.log.info("Discord Bot shutdown!");
     }
 
     private void registerGuildCommands(JDA client) {

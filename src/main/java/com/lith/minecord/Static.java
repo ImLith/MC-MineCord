@@ -3,14 +3,11 @@ package com.lith.minecord;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.logging.Logger;
 import com.lith.lithcore.abstractClasses.AbstractConfigKey;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 public class Static {
-    public static final String pluginName = "MineCord";
-    public static final Logger log = Logger.getLogger(Static.pluginName);
     public static TextChannel textChannel = null;
 
     final public static class ConfigKeys {

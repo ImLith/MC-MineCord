@@ -1,7 +1,7 @@
 package com.lith.minecord;
 
-import com.lith.lithcore.abstractClasses.MainPlugin;
-import com.lith.lithcore.classes.commands.ReloadConfigCmd;
+import com.lith.lithcore.abstractClasses.AbstractPlugin;
+import com.lith.lithcore.helpers.ReloadConfigCmd;
 import com.lith.minecord.classes.DiscordManager;
 import com.lith.minecord.config.ConfigManager;
 import com.lith.minecord.events.minecraft.PlayerAchievement;
@@ -12,32 +12,31 @@ import com.lith.minecord.events.minecraft.PlayerLeave;
 import com.lith.minecord.utils.DcMessageUtil;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
-public class Plugin extends MainPlugin<ConfigManager> {
-  public static Plugin plugin;
-
+public class Plugin extends AbstractPlugin<Plugin, ConfigManager> {
   public void onEnable() {
-    Plugin.plugin = this;
-
-    registerConfigs();
-    registerCommands();
-
-    if (isChannelValid() && !ConfigManager.dcMsg.serverOn.isEmpty()) {
-      DiscordManager.init().sendMessage(
-          Static.textChannel,
-          ConfigManager.dcMsg.serverOn);
-    }
-
-    Static.log.info("Plugin enabled");
+    configs = new ConfigManager(this);
+    DiscordManager.setPlugin(this);
+    super.onEnable();
   }
 
+  @Override
   public void onDisable() {
-    if (isChannelValid() && !ConfigManager.dcMsg.serverOff.isEmpty())
+    if (isValid() && !ConfigManager.dcMsg.serverOff.isEmpty())
       DiscordManager.init().sendMessage(
           Static.textChannel,
           ConfigManager.dcMsg.serverOff);
 
     DiscordManager.init().stop();
-    Static.log.info("Plugin disabled");
+    super.onDisable();
+  }
+
+  @Override
+  protected void preRegisterRunnables() {
+    if (isValid() && !ConfigManager.dcMsg.serverOn.isEmpty()) {
+      DiscordManager.init().sendMessage(
+          Static.textChannel,
+          ConfigManager.dcMsg.serverOn);
+    }
   }
 
   @Override
@@ -45,25 +44,24 @@ public class Plugin extends MainPlugin<ConfigManager> {
     Static.textChannel = null;
 
     unregisterAllEvents();
-    new ConfigManager(this);
-
     if (!DiscordManager.init().isOnline())
       DiscordManager.init().start();
 
     validateChannel();
-
-    if (!isChannelValid()) {
-      Static.log.warning("Text channel not found! Check your configs");
-    } else {
-      registerEvents();
-    }
   }
 
-  private void registerCommands() {
+  @Override
+  protected void registerCommands() {
     new ReloadConfigCmd<Plugin>(this, Static.Command.PermissionKeys.RELOAD, Static.Command.Names.RELOAD);
   }
 
-  private void registerEvents() {
+  @Override
+  protected void registerEvents() {
+    if (!isValid()) {
+      log.warning("Text channel not found! Check your configs");
+      return;
+    }
+
     if (!ConfigManager.dcMsg.format.isEmpty())
       registerEvent(new PlayerChat());
 
@@ -85,7 +83,7 @@ public class Plugin extends MainPlugin<ConfigManager> {
     Static.textChannel = DcMessageUtil.isInTextChannel(channel) ? channel : null;
   }
 
-  private Boolean isChannelValid() {
+  private Boolean isValid() {
     return Static.textChannel != null;
   }
 }
