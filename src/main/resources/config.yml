@@ -22,6 +22,12 @@ minecraft_messages:
   hover: "Sent from Discord server.\nClick to join!" # Hovering over a selected text segmant will show text
   format: "&7%content%" # Discord message content. Can also add '%user_name%'
 
+  # Required Emojies (https://github.com/ImLith/MC-Emojies) plugin to work.
+  # Without the plugin - these configs do nothing
+  add_emojies: false # Is not effected by the reload command!
+  after_emojie: "&7" # What to add after the emojie (for text coloring for example)
+  before_emojie: "&r" # What to add before the emojie (recommended to use &r to remove the tint of the text color)
+
   # Extra elements whenever the user replies to a message
   reply:
     icon: "=>" # Icon that is added after <prefix> but before <format> on reply messages

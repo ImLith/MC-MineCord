@@ -2,7 +2,7 @@ package com.lith.minecord.events.discord;
 
 import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
-import com.lith.minecord.Plugin;
+import com.lith.minecord.MineCordPlugin;
 import com.lith.minecord.classes.McMessageBuilder;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -12,7 +12,7 @@ import net.kyori.adventure.text.Component;
 @RequiredArgsConstructor
 public class SendDiscordMessage extends ListenerAdapter {
     @NotNull
-    private final Plugin plugin;
+    private final MineCordPlugin plugin;
 
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {

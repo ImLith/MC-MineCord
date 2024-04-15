@@ -1,7 +1,7 @@
 package com.lith.minecord.classes;
 
 import org.jetbrains.annotations.NotNull;
-import com.lith.minecord.Plugin;
+import com.lith.minecord.MineCordPlugin;
 import com.lith.minecord.Static;
 import com.lith.minecord.events.discord.BotEvent;
 import com.lith.minecord.events.discord.SendDiscordMessage;
@@ -14,12 +14,12 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class DiscordManager {
-    private final Plugin plugin;
+    private final MineCordPlugin plugin;
     private JDABuilder builder = null;
     @Getter
     private JDA client = null;
 
-    public DiscordManager(@NotNull Plugin plugin) {
+    public DiscordManager(@NotNull MineCordPlugin plugin) {
         this.plugin = plugin;
         createBuilder();
     }

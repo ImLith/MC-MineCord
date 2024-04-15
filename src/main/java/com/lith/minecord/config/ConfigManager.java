@@ -1,18 +1,18 @@
 package com.lith.minecord.config;
 
 import com.lith.lithcore.abstractClasses.AbstractConfigManager;
-import com.lith.minecord.Plugin;
+import com.lith.minecord.MineCordPlugin;
 import com.lith.minecord.Static.ConfigKeys;
 import com.lith.minecord.classes.DcValidationBuilder;
 
-public class ConfigManager extends AbstractConfigManager<Plugin, ConfigManager> {
+public class ConfigManager extends AbstractConfigManager<MineCordPlugin, ConfigManager> {
     public BotConfig botConfig;
     public DiscordMessage dcMsg;
     public MinecraftMessage mcMsg;
     public DcValidationBuilder mcTextValidations;
     public SlashCommands slashCommands;
 
-    public ConfigManager(final Plugin plugin) {
+    public ConfigManager(final MineCordPlugin plugin) {
         super(plugin);
 
         mcTextValidations = new DcValidationBuilder();
@@ -47,11 +47,14 @@ public class ConfigManager extends AbstractConfigManager<Plugin, ConfigManager> 
     }
 
     public final class MinecraftMessage {
-        public final Reply reply = new Reply();;
+        public final Reply reply = new Reply();
 
         public final String prefix = getMessage(ConfigKeys.Minecraft_Messages.PREFIX);
         public final String hover = getMessage(ConfigKeys.Minecraft_Messages.HOVER);
         public final String format = getMessage(ConfigKeys.Minecraft_Messages.FORMAT);
+        public final String afterEmojie = getMessage(ConfigKeys.Minecraft_Messages.AFTER_EMOJIE);
+        public final String beforeEmojie = getMessage(ConfigKeys.Minecraft_Messages.BEFORE_EMOJIE);
+        public final Boolean addEmojies = config.getBoolean(ConfigKeys.Minecraft_Messages.ADD_EMOJIES);
         public final Boolean isClickable = config.getBoolean(ConfigKeys.Minecraft_Messages.CLICKABLE)
                 && !config.getString(ConfigKeys.Bot.INVITE_LINK).isEmpty();
 
