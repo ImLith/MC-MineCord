@@ -35,6 +35,7 @@ public class Static {
             public static final String FORMAT = setKey("format");
             public static final String ADD_EMOJIES = setKey("add_emojies");
             public static final String AFTER_EMOJIE = setKey("after_emojie");
+            public static final String BEFORE_EMOJIE = setKey("before_emojie");
 
             public static final class Reply extends AbstractConfigKey {
                 public static final String ICON = setKey("icon");

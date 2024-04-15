@@ -83,7 +83,8 @@ public class McMessageBuilder {
         String contentDisplay = message.getContentDisplay();
 
         if (plugin.getEmojiesPlugin() != null)
-            contentDisplay = EmojiesUtil.addEmojies(contentDisplay, plugin.configs.mcMsg.afterEmojie);
+            contentDisplay = EmojiesUtil.addEmojies(contentDisplay, plugin.configs.mcMsg.afterEmojie,
+                    plugin.configs.mcMsg.beforeEmojie);
 
         TextComponent textComponent = text(plugin.configs.mcMsg.format
                 .replace(Static.MessageKey.USER_NAME, message.getAuthor().getEffectiveName())
@@ -121,7 +122,8 @@ public class McMessageBuilder {
             String contentDisplay = repliedMessage.getContentStripped();
 
             if (plugin.getEmojiesPlugin() != null)
-                contentDisplay = EmojiesUtil.addEmojies(contentDisplay, plugin.configs.mcMsg.afterEmojie);
+                contentDisplay = EmojiesUtil.addEmojies(contentDisplay, plugin.configs.mcMsg.afterEmojie,
+                        plugin.configs.mcMsg.beforeEmojie);
 
             text = text.hoverEvent(showText(text(hoverText.replace(Static.MessageKey.CONTENT, contentDisplay))));
         }

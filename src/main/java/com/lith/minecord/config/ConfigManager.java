@@ -53,6 +53,7 @@ public class ConfigManager extends AbstractConfigManager<MineCordPlugin, ConfigM
         public final String hover = getMessage(ConfigKeys.Minecraft_Messages.HOVER);
         public final String format = getMessage(ConfigKeys.Minecraft_Messages.FORMAT);
         public final String afterEmojie = getMessage(ConfigKeys.Minecraft_Messages.AFTER_EMOJIE);
+        public final String beforeEmojie = getMessage(ConfigKeys.Minecraft_Messages.BEFORE_EMOJIE);
         public final Boolean addEmojies = config.getBoolean(ConfigKeys.Minecraft_Messages.ADD_EMOJIES);
         public final Boolean isClickable = config.getBoolean(ConfigKeys.Minecraft_Messages.CLICKABLE)
                 && !config.getString(ConfigKeys.Bot.INVITE_LINK).isEmpty();
