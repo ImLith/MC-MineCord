@@ -3,7 +3,7 @@
 
   <groupId>com.lith.minecord</groupId>
   <artifactId>minecord</artifactId>
-  <version>0.0.5</version>
+  <version>0.0.6</version>
 
   <name>MineCord</name>
   <packaging>jar</packaging>
