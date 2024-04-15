@@ -118,7 +118,7 @@ public class McMessageBuilder {
         }
 
         if (hoverText != null) {
-            String contentDisplay = repliedMessage.getContentDisplay();
+            String contentDisplay = repliedMessage.getContentStripped();
 
             if (plugin.getEmojiesPlugin() != null)
                 contentDisplay = EmojiesUtil.addEmojies(contentDisplay, plugin.configs.mcMsg.afterEmojie);
