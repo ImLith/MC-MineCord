@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import org.bukkit.Bukkit;
 import java.util.List;
 import com.lith.lithcore.utils.PlayerUtil;
-import com.lith.minecord.Plugin;
+import com.lith.minecord.MineCordPlugin;
 import com.lith.minecord.Static;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -14,7 +14,7 @@ import java.awt.Color;
 
 @RequiredArgsConstructor
 public class SlashCommandEvent extends ListenerAdapter {
-    private final Plugin plugin;
+    private final MineCordPlugin plugin;
 
     @Override
     public void onSlashCommandInteraction(@Nonnull SlashCommandInteractionEvent event) {

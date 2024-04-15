@@ -1,5 +1,6 @@
 package com.lith.minecord;
 
+import org.bukkit.Bukkit;
 import com.lith.lithcore.abstractClasses.AbstractPlugin;
 import com.lith.lithcore.helpers.ReloadConfigCmd;
 import com.lith.minecord.classes.DiscordManager;
@@ -12,15 +13,25 @@ import com.lith.minecord.events.minecraft.PlayerLeave;
 import com.lith.minecord.utils.DcMessageUtil;
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import org.bukkit.plugin.Plugin;
 
-public class Plugin extends AbstractPlugin<Plugin, ConfigManager> {
+public class MineCordPlugin extends AbstractPlugin<MineCordPlugin, ConfigManager> {
   @Getter
   private DiscordManager discordManager = null;
+  @Getter
+  private Plugin emojiesPlugin = null;
 
   @Override
   public void onEnable() {
     configs = new ConfigManager(this);
     super.onEnable();
+
+    if (configs.mcMsg.addEmojies) {
+      Plugin softDependPlugin = Bukkit.getPluginManager().getPlugin("Emojies");
+
+      if (softDependPlugin != null && softDependPlugin.isEnabled())
+        emojiesPlugin = softDependPlugin;
+    }
   }
 
   @Override
@@ -61,7 +72,7 @@ public class Plugin extends AbstractPlugin<Plugin, ConfigManager> {
 
   @Override
   protected void registerCommands() {
-    new ReloadConfigCmd<Plugin>(this, Static.Command.PermissionKeys.RELOAD, Static.Command.Names.RELOAD);
+    new ReloadConfigCmd<MineCordPlugin>(this, Static.Command.PermissionKeys.RELOAD, Static.Command.Names.RELOAD);
   }
 
   @Override

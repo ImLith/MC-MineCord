@@ -2,7 +2,7 @@ package com.lith.minecord.events.discord;
 
 import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
-import com.lith.minecord.Plugin;
+import com.lith.minecord.MineCordPlugin;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.events.session.ShutdownEvent;
 @RequiredArgsConstructor
 public class BotEvent extends ListenerAdapter {
     @NotNull
-    private final Plugin plugin;
+    private final MineCordPlugin plugin;
 
     @Override
     public void onReady(@Nonnull ReadyEvent event) {

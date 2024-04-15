@@ -1,5 +1,5 @@
 name: MineCord
-main: com.lith.minecord.Plugin
+main: com.lith.minecord.MineCordPlugin
 
 version: 0.0.6
 api-version: 1.20
@@ -9,7 +9,7 @@ author: Lith
 website: https://github.com/ImLith/MC-MineCord
 
 depend: [LithCore]
-softdepend: []
+softdepend: [Emojies]
 
 commands:
   dcReload:

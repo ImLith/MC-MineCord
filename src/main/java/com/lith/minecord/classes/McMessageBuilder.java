@@ -1,7 +1,7 @@
 package com.lith.minecord.classes;
 
 import java.util.ArrayList;
-import com.lith.minecord.Plugin;
+import com.lith.minecord.MineCordPlugin;
 import com.lith.minecord.Static;
 import com.lith.minecord.utils.DcMessageUtil;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.dv8tion.jda.api.entities.User;
+import com.lith.emojies.util.EmojiesUtil;
 import static net.kyori.adventure.text.Component.join;
 import static net.kyori.adventure.text.JoinConfiguration.noSeparators;
 import static net.kyori.adventure.text.Component.text;
@@ -17,13 +18,13 @@ import static net.kyori.adventure.text.event.HoverEvent.showText;
 import static net.kyori.adventure.text.event.ClickEvent.openUrl;
 
 public class McMessageBuilder {
-    private final Plugin plugin;
+    private final MineCordPlugin plugin;
     @Getter
     private boolean isValid = false;
     private Message message = null;
     private Message repliedMessage = null;
 
-    public McMessageBuilder(Plugin plugin, MessageReceivedEvent event) {
+    public McMessageBuilder(MineCordPlugin plugin, MessageReceivedEvent event) {
         this.plugin = plugin;
 
         if (DcMessageUtil.validateMessageOrigin(event, plugin.configs.mcTextValidations)) {
@@ -79,14 +80,19 @@ public class McMessageBuilder {
     }
 
     private TextComponent buildMessageSection() {
-        TextComponent text = text(plugin.configs.mcMsg.format
+        String contentDisplay = message.getContentDisplay();
+
+        if (plugin.getEmojiesPlugin() != null)
+            contentDisplay = EmojiesUtil.addEmojies(contentDisplay, plugin.configs.mcMsg.afterEmojie);
+
+        TextComponent textComponent = text(plugin.configs.mcMsg.format
                 .replace(Static.MessageKey.USER_NAME, message.getAuthor().getEffectiveName())
-                .replace(Static.MessageKey.CONTENT, message.getContentDisplay()));
+                .replace(Static.MessageKey.CONTENT, contentDisplay));
 
         if (repliedMessage != null)
-            text = addHoverText(text, repliedMessage.getAuthor());
+            textComponent = addHoverText(textComponent, repliedMessage.getAuthor());
 
-        return text;
+        return textComponent;
     }
 
     private TextComponent buildMessagePrefix() {
@@ -112,8 +118,12 @@ public class McMessageBuilder {
         }
 
         if (hoverText != null) {
-            hoverText = hoverText.replace(Static.MessageKey.CONTENT, repliedMessage.getContentStripped());
-            text = text.hoverEvent(showText(text(hoverText)));
+            String contentDisplay = repliedMessage.getContentDisplay();
+
+            if (plugin.getEmojiesPlugin() != null)
+                contentDisplay = EmojiesUtil.addEmojies(contentDisplay, plugin.configs.mcMsg.afterEmojie);
+
+            text = text.hoverEvent(showText(text(hoverText.replace(Static.MessageKey.CONTENT, contentDisplay))));
         }
 
         return text;
