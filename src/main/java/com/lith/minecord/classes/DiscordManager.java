@@ -1,36 +1,62 @@
 package com.lith.minecord.classes;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 import com.lith.minecord.MineCordPlugin;
-import com.lith.minecord.Static;
 import com.lith.minecord.events.discord.BotEvent;
-import com.lith.minecord.events.discord.SendDiscordMessage;
-import com.lith.minecord.events.discord.SlashCommandEvent;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class DiscordManager {
-    private final MineCordPlugin plugin;
-    private JDABuilder builder = null;
+    private final @NotNull MineCordPlugin plugin;
+    private Set<GatewayIntent> gatewayIntents = new HashSet<>();
+    private Set<ListenerAdapter> events = new HashSet<>();
     @Getter
     private JDA client = null;
 
     public DiscordManager(@NotNull MineCordPlugin plugin) {
         this.plugin = plugin;
-        createBuilder();
+
+        addEvent(new BotEvent(plugin));
     }
 
-    public Boolean isOnline() {
-        return client != null;
+    public void addGatewayIntent(@NotNull GatewayIntent gatewayIntent) {
+        this.gatewayIntents.add(gatewayIntent);
+    }
+
+    public void addGatewayIntent(@NotNull GatewayIntent... gatewayIntents) {
+        for (GatewayIntent gatewayIntent : gatewayIntents)
+            this.gatewayIntents.add(gatewayIntent);
+    }
+
+    public void addEvent(@NotNull ListenerAdapter event) {
+        this.events.add(event);
+    }
+
+    public void addEvent(@NotNull ListenerAdapter... events) {
+        for (ListenerAdapter event : events)
+            this.events.add(event);
     }
 
     public void start() {
-        if (!isOnline())
-            createClient();
+        try {
+            if (!isOnline())
+                run();
+            else
+                plugin.log.warning("Bot is already running! First stop it!");
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void stop() {
@@ -40,8 +66,12 @@ public class DiscordManager {
         }
     }
 
+    public Boolean isOnline() {
+        return client != null;
+    }
+
     public void sendMessage(@NotNull String channelId, @NotNull String content) {
-        if (client == null)
+        if (!isOnline())
             return;
 
         if (channelId.isEmpty() || content.isEmpty())
@@ -55,7 +85,7 @@ public class DiscordManager {
     }
 
     public void sendMessage(@NotNull TextChannel channel, @NotNull String content) {
-        if (client == null)
+        if (!isOnline())
             return;
 
         channel.sendMessage(content).queue(
@@ -66,28 +96,28 @@ public class DiscordManager {
                 });
     }
 
-    private void createBuilder() {
-        builder = JDABuilder.createDefault(plugin.configs.botConfig.token);
-
-        builder.disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
-        builder.disableCache(CacheFlag.ACTIVITY);
-        builder.setChunkingFilter(ChunkingFilter.NONE);
-        builder.setLargeThreshold(50);
-        builder.enableIntents(Static.gatewayIntents);
+    private void createClient() {
+        client = generateBuilder().build();
     }
 
-    private void createClient() {
-        try {
-            client = builder.build();
-            client.addEventListener(new SendDiscordMessage(plugin));
-            client.addEventListener(new BotEvent(plugin));
+    private JDABuilder generateBuilder() {
+        return JDABuilder.createDefault(plugin.configs.getToken())
+                .disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE)
+                .disableCache(CacheFlag.ACTIVITY)
+                .setChunkingFilter(ChunkingFilter.NONE)
+                .setLargeThreshold(50)
+                .enableIntents(gatewayIntents);
+    }
 
-            if (plugin.configs.slashCommands.commandsEnabled)
-                client.addEventListener(new SlashCommandEvent(plugin));
+    private void addEvents() {
+        for (ListenerAdapter event : events)
+            client.addEventListener(event);
+    }
 
-            client.awaitReady();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private void run() throws InterruptedException {
+        createClient();
+        addEvents();
+
+        client.awaitReady();
     }
 }

@@ -1,49 +1,26 @@
 package com.lith.minecord;
 
-import org.bukkit.Bukkit;
 import com.lith.lithcore.abstractClasses.AbstractPlugin;
 import com.lith.lithcore.helpers.ReloadConfigCmd;
 import com.lith.minecord.classes.DiscordManager;
 import com.lith.minecord.config.ConfigManager;
-import com.lith.minecord.events.minecraft.PlayerAchievement;
-import com.lith.minecord.events.minecraft.PlayerChat;
-import com.lith.minecord.events.minecraft.PlayerDeath;
-import com.lith.minecord.events.minecraft.PlayerJoin;
-import com.lith.minecord.events.minecraft.PlayerLeave;
-import com.lith.minecord.utils.DcMessageUtil;
+import com.lith.minecord.events.minecraft.ServerEvent;
 import lombok.Getter;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import org.bukkit.plugin.Plugin;
 
 public class MineCordPlugin extends AbstractPlugin<MineCordPlugin, ConfigManager> {
   @Getter
   private DiscordManager discordManager = null;
-  @Getter
-  private Plugin emojiesPlugin = null;
 
   @Override
   public void onEnable() {
     configs = new ConfigManager(this);
     super.onEnable();
-
-    if (configs.mcMsg.addEmojies) {
-      Plugin softDependPlugin = Bukkit.getPluginManager().getPlugin("Emojies");
-
-      if (softDependPlugin != null && softDependPlugin.isEnabled())
-        emojiesPlugin = softDependPlugin;
-    }
   }
 
   @Override
   public void onDisable() {
-    if (discordManager != null) {
-      if (isValid() && !configs.dcMsg.serverOff.isEmpty())
-        discordManager.sendMessage(
-            Static.textChannel,
-            configs.dcMsg.serverOff);
-
+    if (discordManager != null)
       discordManager.stop();
-    }
 
     super.onDisable();
   }
@@ -52,67 +29,29 @@ public class MineCordPlugin extends AbstractPlugin<MineCordPlugin, ConfigManager
   public void reloadConfigs() {
     super.reloadConfigs();
     registerEvents();
+
+    if (discordManager.isOnline())
+      discordManager.stop();
+
+    if (!discordManager.isOnline())
+      discordManager.start();
   }
 
   @Override
   protected void registerConfigs() {
     super.registerConfigs();
-    Static.textChannel = null;
-
-    unregisterAllEvents();
 
     if (discordManager == null)
       discordManager = new DiscordManager(this);
+  }
 
-    if (!discordManager.isOnline())
-      discordManager.start();
-
-    validateChannel();
+  @Override
+  protected void registerEvents() {
+    registerEvent(new ServerEvent(this), true);
   }
 
   @Override
   protected void registerCommands() {
     new ReloadConfigCmd<MineCordPlugin>(this, Static.Command.PermissionKeys.RELOAD, Static.Command.Names.RELOAD);
-  }
-
-  @Override
-  protected void registerEvents() {
-    if (!isValid()) {
-      log.warning("Text channel not found! Check your configs");
-      return;
-    }
-
-    if (!configs.dcMsg.format.isEmpty())
-      registerEvent(new PlayerChat(this));
-
-    if (!configs.dcMsg.join.isEmpty())
-      registerEvent(new PlayerJoin(this));
-
-    if (!configs.dcMsg.leave.isEmpty())
-      registerEvent(new PlayerLeave(this));
-
-    if (!configs.dcMsg.achievement.isEmpty())
-      registerEvent(new PlayerAchievement(this));
-
-    if (configs.dcMsg.onDeath)
-      registerEvent(new PlayerDeath(this));
-  }
-
-  @Override
-  protected void preRegisterRunnables() {
-    if (isValid() && !configs.dcMsg.serverOn.isEmpty()) {
-      discordManager.sendMessage(
-          Static.textChannel,
-          configs.dcMsg.serverOn);
-    }
-  }
-
-  private void validateChannel() {
-    TextChannel channel = discordManager.getClient().getTextChannelById(configs.botConfig.channelId);
-    Static.textChannel = DcMessageUtil.isInTextChannel(channel) ? channel : null;
-  }
-
-  private Boolean isValid() {
-    return Static.textChannel != null;
   }
 }

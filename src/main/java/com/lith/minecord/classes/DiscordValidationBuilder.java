@@ -1,6 +1,6 @@
 package com.lith.minecord.classes;
 
-public class DcValidationBuilder {
+public class DiscordValidationBuilder {
     public Boolean isOnlyFromGuild = false;
     public Boolean isOnlyTextChannel = true;
     public Boolean isOnlyUser = true;
