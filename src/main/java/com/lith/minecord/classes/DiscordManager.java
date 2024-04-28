@@ -1,5 +1,6 @@
 package com.lith.minecord.classes;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +33,11 @@ public class DiscordManager {
     }
 
     public void addGatewayIntent(@NotNull GatewayIntent... gatewayIntents) {
+        for (GatewayIntent gatewayIntent : gatewayIntents)
+            this.gatewayIntents.add(gatewayIntent);
+    }
+
+    public void addGatewayIntent(@NotNull Collection<GatewayIntent> gatewayIntents) {
         for (GatewayIntent gatewayIntent : gatewayIntents)
             this.gatewayIntents.add(gatewayIntent);
     }

@@ -2,7 +2,6 @@ package com.lith.minecord.utils;
 
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
-import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class DiscordChannelUtil {
@@ -10,7 +9,7 @@ public class DiscordChannelUtil {
         return isTextChannel(event.getChannel());
     }
 
-    public static Boolean isTextChannel(MessageChannelUnion channel) {
+    public static Boolean isTextChannel(MessageChannel channel) {
         return channel instanceof TextChannel;
     }
 

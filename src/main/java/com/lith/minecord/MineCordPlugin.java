@@ -9,10 +9,13 @@ import lombok.Getter;
 
 public class MineCordPlugin extends AbstractPlugin<MineCordPlugin, ConfigManager> {
   @Getter
-  private DiscordManager discordManager = null;
+  private static MineCordPlugin plugin = null;
+  @Getter
+  private static DiscordManager discordManager = null;
 
   @Override
   public void onEnable() {
+    plugin = this;
     configs = new ConfigManager(this);
     super.onEnable();
   }
