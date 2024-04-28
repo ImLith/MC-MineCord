@@ -1,3 +1,4 @@
 token: "YOUR DISCORD BOT TOKEN" # String
 server_id: YOUR GUILD (server) ID # Number
 invite_link: "YOUR DISCORD INVITE LINK" # Url
+enable_slash_commands: true # Disabling this option will disable all commands

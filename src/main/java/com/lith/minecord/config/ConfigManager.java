@@ -12,6 +12,8 @@ public class ConfigManager extends AbstractConfigManager<MineCordPlugin, ConfigM
     private Long serverId = null;
     @Getter
     private String inviteLink = null;
+    @Getter
+    private boolean enableSlashCommands = false;
 
     public ConfigManager(final MineCordPlugin plugin) {
         super(plugin);
@@ -24,5 +26,6 @@ public class ConfigManager extends AbstractConfigManager<MineCordPlugin, ConfigM
         token = config.getString(ConfigKeys.TOKEN);
         serverId = config.getLong(ConfigKeys.SERVER_ID);
         inviteLink = config.getString(ConfigKeys.INVITE_LINK);
+        enableSlashCommands = config.getBoolean(ConfigKeys.ENABLE_SLASH_COMMANDS);
     }
 }

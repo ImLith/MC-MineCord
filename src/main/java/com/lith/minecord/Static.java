@@ -2,9 +2,10 @@ package com.lith.minecord;
 
 public class Static {
     final public static class ConfigKeys {
-        public static final String TOKEN = ("token");
-        public static final String SERVER_ID = ("server_id");
-        public static final String INVITE_LINK = ("invite_link");
+        public static final String TOKEN = "token";
+        public static final String SERVER_ID = "server_id";
+        public static final String INVITE_LINK = "invite_link";
+        public static final String ENABLE_SLASH_COMMANDS = "enable_slash_commands";
     }
 
     final public static class Command {
