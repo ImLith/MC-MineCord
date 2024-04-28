@@ -50,7 +50,7 @@ public class MineCordPlugin extends AbstractPlugin<MineCordPlugin, ConfigManager
 
   @Override
   protected void registerEvents() {
-    registerEvent(new ServerEvent(this), true);
+    registerEvent(new ServerEvent(), true);
   }
 
   @Override
