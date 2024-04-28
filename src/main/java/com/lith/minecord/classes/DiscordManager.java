@@ -115,14 +115,11 @@ public class DiscordManager {
                 .enableIntents(gatewayIntents);
     }
 
-    private void addEvents() {
-        for (ListenerAdapter event : events)
-            client.addEventListener(event);
-    }
-
     private void run() throws InterruptedException {
         createClient();
-        addEvents();
+
+        for (ListenerAdapter event : events)
+            client.addEventListener(event);
 
         client.awaitReady();
     }
